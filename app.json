@@ -1,0 +1,11 @@
+{
+  "expo": {
+    "name": "rn_shoppy_app",
+    "slug": "rn_shoppy_app",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  },
+  "name": "rn_shoppy_app"
+}
