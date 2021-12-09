@@ -10,6 +10,8 @@ import {
 import { useSelector, useDispatch } from "react-redux";
 import Colors from "../../constants/Colors";
 import * as CartActions from "../../store/actions/Cart";
+import CartButton from "../../components/UI/CartButton";
+import { HeaderButtons, Item } from "react-navigation-header-buttons";
 
 const ProductDetailScreen = (props) => {
   const productId = props.navigation.getParam("productId");
@@ -42,7 +44,20 @@ const ProductDetailScreen = (props) => {
 };
 
 ProductDetailScreen.navigationOptions = (navData) => {
-  return { headerTitle: navData.navigation.getParam("productTitle") };
+  return {
+    headerTitle: navData.navigation.getParam("productTitle"),
+    headerLeft: () => (
+      <HeaderButtons HeaderButtonComponent={CartButton}>
+        <Item
+          title="Menu"
+          iconName="ios-menu"
+          onPress={() => {
+            navData.navigation.toggleDrawer();
+          }}
+        />
+      </HeaderButtons>
+    ),
+  };
 };
 
 export default ProductDetailScreen;

@@ -1,16 +1,26 @@
 import React from "react";
-import { StyleSheet, FlatList, Text, View, Button, Image } from "react-native";
-import { ScrollView } from "react-native-gesture-handler";
-import { useSelector } from "react-redux";
+import {
+  StyleSheet,
+  FlatList,
+  Text,
+  View,
+  Button,
+  Image,
+  Dimensions,
+  Platform,
+} from "react-native";
+import { useSelector, useDispatch } from "react-redux";
+import { applyMiddleware } from "redux";
 import CartItem from "../../components/shop/CartItem";
 import Colors from "../../constants/Colors";
+import * as CartActions from "../../store/actions/Cart";
 
 const CartScreen = (props) => {
   let totalQuantity = 0;
   // const cartItems = useSelector((state) => state.cart.items); // gives object convert to array
   const productsss = useSelector((state) => state.products.avaiableProducts);
-  const emptyImageUrl =
-    "https://rukminim1.flixcart.com/www/800/800/promos/16/05/2019/d438a32e-765a-4d8b-b4a6-520b560971e8.png?q=90";
+  const emptyImageUrl = useSelector((state) => state.cart.emptyImageUrl);
+  // "https://rukminim1.flixcart.com/www/800/800/promos/16/05/2019/d438a32e-765a-4d8b-b4a6-520b560971e8.png?q=90";
   const cartItems = useSelector((state) => {
     const transformedCartItem = [];
     for (const key in state.cart.items) {
@@ -23,9 +33,14 @@ const CartScreen = (props) => {
       });
       totalQuantity = totalQuantity + parseInt(state.cart.items[key].quantity);
     }
-    return transformedCartItem;
+    // return transformedCartItem;// because auto arrange
+    return transformedCartItem.sort((a, b) =>
+      a.productId > b.productId ? 1 : -1
+    );
   });
   const Cart_total_amt = useSelector((state) => state.cart.totalAmount);
+
+  const dispatch = useDispatch();
 
   if (cartItems.length === 0 || !cartItems) {
     return (
@@ -68,7 +83,9 @@ const CartScreen = (props) => {
             productTitle: itemData.item.productTitle,
           });
         }}
-        onRemove={() => {}}
+        onRemove={() => {
+          dispatch(CartActions.deleteFromCart(itemData.item.productId));
+        }}
       />
     );
   };
@@ -156,8 +173,7 @@ const cstyle = StyleSheet.create({
     //justifyContent: "center",
   },
   browse: {
-    marginTop: 40,
-    paddingHorizontal: 20,
+    marginTop: "6%",
   },
   emptyTitle: {
     fontFamily: "my-open-sans-bold",
@@ -173,9 +189,9 @@ const cstyle = StyleSheet.create({
     height: "100%",
   },
   imageConatiner: {
-    marginTop: 150,
+    marginTop: Platform.OS === "ios" ? "40%" : "30%",
     width: "80%",
-    height: "30%",
+    height: Platform.OS === "ios" ? "30%" : "40%",
     // borderWidth: 1,
     //  borderTopLeftRadius: 10,
     //  borderTopRightRadius: 10,

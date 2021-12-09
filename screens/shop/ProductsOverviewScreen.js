@@ -44,9 +44,20 @@ ProductsOverviewScreen.navigationOptions = (navData) => {
       <HeaderButtons HeaderButtonComponent={CartButton}>
         <Item
           title="Cart"
-          iconName="shoppingcart"
+          iconName="ios-cart"
           onPress={() => {
             navData.navigation.navigate("CartScreens");
+          }}
+        />
+      </HeaderButtons>
+    ),
+    headerLeft: () => (
+      <HeaderButtons HeaderButtonComponent={CartButton}>
+        <Item
+          title="Menu"
+          iconName="ios-menu"
+          onPress={() => {
+            navData.navigation.toggleDrawer();
           }}
         />
       </HeaderButtons>

@@ -8,7 +8,7 @@ import ProductReducer from "./store/reducers/Product";
 import CartReducer from "./store/reducers/Cart";
 import ShopNavigation from "./navigation/ShopNavigation";
 import { enableScreens } from "react-native-screens";
-//import { composeWithDevTools } from "redux-devtools-extension";
+import { composeWithDevTools } from "redux-devtools-extension";
 
 enableScreens();
 
@@ -17,9 +17,9 @@ const rootReducer = combineReducers({
   cart: CartReducer,
 });
 
-const store = createStore(rootReducer); // for production
+//const store = createStore(rootReducer); // for production
 
-//const store = createStore(rootReducer, composeWithDevTools()); // for debugger
+const store = createStore(rootReducer, composeWithDevTools()); // for debugger
 
 const fetchFonts = () => {
   return Font.loadAsync({

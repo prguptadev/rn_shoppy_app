@@ -7,7 +7,7 @@ import Colors from "../../constants/Colors";
 const CartButton = (props) => {
   return (
     <HeaderButton
-      IconComponent={AntDesign}
+      IconComponent={Ionicons}
       iconSize={25}
       color={Platform.OS === "android" ? "white" : Colors.primary}
       {...props}

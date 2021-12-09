@@ -61,7 +61,7 @@ const pistyle = StyleSheet.create({
     borderRadius: 10,
     backgroundColor: "white",
     height: 300,
-    margin: 20,
+    margin: 15,
     //  overflow: "hidden",
   },
   touchable: {

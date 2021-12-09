@@ -14,14 +14,14 @@ import { Ionicons } from "@expo/vector-icons";
 
 const CartItem = (props) => {
   let TouchableCmp = TouchableOpacity;
-  if (Platform.OS === "android" && Platform.Version >= 21) {
+  if (Platform.OS === "android") {
     TouchableCmp = TouchableNativeFeedback;
   }
   return (
     <View style={sstyle.cartItem}>
       <View style={sstyle.newdesign}>
         <View style={sstyle.imagecont}>
-          <View>
+          <View style={sstyle.touchable}>
             <TouchableCmp onPress={props.onViewDetails} useForeground>
               <Image source={{ uri: props.c_image }} style={sstyle.image} />
             </TouchableCmp>
@@ -67,9 +67,10 @@ const sstyle = StyleSheet.create({
     padding: 4,
     borderRadius: 10,
     margin: 6,
+    // overflow: "hidden",
   },
   touchable: {
-    // borderRadius: 10,
+    borderRadius: 10,
     overflow: "hidden",
   },
   newdesign: {
