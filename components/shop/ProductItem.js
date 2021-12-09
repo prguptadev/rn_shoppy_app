@@ -86,7 +86,7 @@ const pistyle = StyleSheet.create({
   },
   title: {
     fontSize: 18,
-    marginVertical: 4,
+    marginVertical: 2,
     fontFamily: "my-open-sans-bold",
   },
   price: {

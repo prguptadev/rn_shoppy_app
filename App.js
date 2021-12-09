@@ -5,16 +5,21 @@ import * as Font from "expo-font";
 import AppLoading from "expo-app-loading";
 import { createStore, combineReducers } from "redux";
 import ProductReducer from "./store/reducers/Product";
+import CartReducer from "./store/reducers/Cart";
 import ShopNavigation from "./navigation/ShopNavigation";
 import { enableScreens } from "react-native-screens";
+//import { composeWithDevTools } from "redux-devtools-extension";
 
 enableScreens();
 
 const rootReducer = combineReducers({
   products: ProductReducer,
+  cart: CartReducer,
 });
 
-const store = createStore(rootReducer);
+const store = createStore(rootReducer); // for production
+
+//const store = createStore(rootReducer, composeWithDevTools()); // for debugger
 
 const fetchFonts = () => {
   return Font.loadAsync({

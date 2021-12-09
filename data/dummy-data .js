@@ -4,7 +4,7 @@ const PRODUCTS = [
   new Product(
     "p0",
     "u0",
-    "New Shoe",
+    "New Shoes",
     "https://assets.myntassets.com/f_webp,dpr_1.0,q_60,w_210,c_limit,fl_progressive/assets/images/7741225/2018/11/6/17b6de13-4107-479a-a32a-07f98fd2cc3f1541491577565-Eego-Italy-Men-Black-Leather-High-Top-Trekking-Shoes-4121541491577381-1.jpg",
     "New Denim Black Boots",
     23.23
@@ -31,7 +31,7 @@ const PRODUCTS = [
     "Coffee Mug",
     "https://images.pexels.com/photos/160834/coffee-cup-and-saucer-black-coffee-loose-coffee-beans-160834.jpeg?cs=srgb&dl=bean-beans-black-coffee-160834.jpg&fm=jpg",
     "Can also be used for tea!",
-    8.99
+    800.99
   ),
   new Product(
     "p4",
@@ -39,7 +39,7 @@ const PRODUCTS = [
     "The Book - Limited Edition",
     "https://images.pexels.com/photos/46274/pexels-photo-46274.jpeg?cs=srgb&dl=blur-blurred-book-pages-46274.jpg&fm=jpg",
     "What the content is? Why would that matter? It's a limited edition!",
-    15.99
+    150.99
   ),
   new Product(
     "p5",
