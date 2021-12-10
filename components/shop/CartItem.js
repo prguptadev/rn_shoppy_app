@@ -37,15 +37,20 @@ const CartItem = (props) => {
 
       <View style={sstyle.detailsss}>
         <Text style={sstyle.amount} numberOfLines={2}>
-          ${props.c_amt.toFixed(2)}
+          ${props.c_amt}
         </Text>
-        <TouchableOpacity onPress={props.onRemove} style={sstyle.deleteButton}>
-          <Ionicons
-            name={Platform.OS === "android" ? "md-trash" : "ios-trash"}
-            size={23}
-            color="red"
-          />
-        </TouchableOpacity>
+        {props.deletable && (
+          <TouchableOpacity
+            onPress={props.onRemove}
+            style={sstyle.deleteButton}
+          >
+            <Ionicons
+              name={Platform.OS === "android" ? "md-trash" : "ios-trash"}
+              size={23}
+              color="red"
+            />
+          </TouchableOpacity>
+        )}
       </View>
     </View>
   );

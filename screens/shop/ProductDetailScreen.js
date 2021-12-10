@@ -46,17 +46,17 @@ const ProductDetailScreen = (props) => {
 ProductDetailScreen.navigationOptions = (navData) => {
   return {
     headerTitle: navData.navigation.getParam("productTitle"),
-    headerLeft: () => (
-      <HeaderButtons HeaderButtonComponent={CartButton}>
-        <Item
-          title="Menu"
-          iconName="ios-menu"
-          onPress={() => {
-            navData.navigation.toggleDrawer();
-          }}
-        />
-      </HeaderButtons>
-    ),
+    // headerLeft: () => (
+    //   <HeaderButtons HeaderButtonComponent={CartButton}>
+    //     <Item
+    //       title="Menu"
+    //       iconName="ios-menu"
+    //       onPress={() => {
+    //         navData.navigation.toggleDrawer();
+    //       }}
+    //     />
+    //   </HeaderButtons>
+    // ),
   };
 };
 

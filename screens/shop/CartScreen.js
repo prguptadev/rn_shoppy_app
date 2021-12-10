@@ -10,10 +10,10 @@ import {
   Platform,
 } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
-import { applyMiddleware } from "redux";
 import CartItem from "../../components/shop/CartItem";
 import Colors from "../../constants/Colors";
 import * as CartActions from "../../store/actions/Cart";
+import * as OrderAction from "../../store/actions/Order";
 
 const CartScreen = (props) => {
   let totalQuantity = 0;
@@ -76,6 +76,7 @@ const CartScreen = (props) => {
         c_image={imageforprodID.imageUrl}
         c_quant={itemData.item.quantity}
         c_title={itemData.item.productTitle}
+        deletable={true}
         c_amt={itemData.item.sum}
         onViewDetails={() => {
           props.navigation.navigate("ProductDetail", {
@@ -102,6 +103,9 @@ const CartScreen = (props) => {
             color={Colors.accent}
             title="Order Now"
             disabled={cartItems.length === 0}
+            onPress={() => {
+              dispatch(OrderAction.addOrder(cartItems, Cart_total_amt));
+            }}
           />
         </View>
       </View>

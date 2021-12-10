@@ -6,6 +6,7 @@ import AppLoading from "expo-app-loading";
 import { createStore, combineReducers } from "redux";
 import ProductReducer from "./store/reducers/Product";
 import CartReducer from "./store/reducers/Cart";
+import OrderReducer from "./store/reducers/Order";
 import ShopNavigation from "./navigation/ShopNavigation";
 import { enableScreens } from "react-native-screens";
 import { composeWithDevTools } from "redux-devtools-extension";
@@ -15,6 +16,7 @@ enableScreens();
 const rootReducer = combineReducers({
   products: ProductReducer,
   cart: CartReducer,
+  orders: OrderReducer,
 });
 
 //const store = createStore(rootReducer); // for production
