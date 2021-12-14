@@ -101,7 +101,7 @@ const CartScreen = (props) => {
           </Text>
           <Button
             color={Colors.accent}
-            title="Order Now"
+            title="Buy Now"
             disabled={cartItems.length === 0}
             onPress={() => {
               dispatch(OrderAction.addOrder(cartItems, Cart_total_amt));

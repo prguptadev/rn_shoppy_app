@@ -32,7 +32,7 @@ const ProductsNavigator = createStackNavigator(
     navigationOptions: {
       drawerIcon: (drawerConfig) => (
         <Ionicons
-          name={(Platform.OS = "android" ? "md-create" : "ios-create")}
+          name={Platform.OS === "android" ? "md-create" : "ios-create"}
           size={23}
           color={drawerConfig.tintColor}
         ></Ionicons>
@@ -46,13 +46,13 @@ const ProductsNavigator = createStackNavigator(
 const OrdersNavigation = createStackNavigator(
   {
     orders: OrderScreen,
-    ProductDetail: ProductDetailScreen,
+    ProductDetailee: ProductDetailScreen,
   },
   {
     navigationOptions: {
       drawerIcon: (drawerConfig) => (
         <Ionicons
-          name={(Platform.OS = "android" ? "md-list" : "ios-list")}
+          name={Platform.OS === "android" ? "md-list" : "ios-list"}
           size={23}
           color={drawerConfig.tintColor}
         ></Ionicons>
