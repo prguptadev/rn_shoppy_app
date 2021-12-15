@@ -16,18 +16,16 @@ const OrderScreen = (props) => {
         <View style={cstyle.imageConatiner}>
           <Image style={cstyle.emptyImage} source={{ uri: emptyImageUrl }} />
         </View>
-        <Text style={cstyle.emptyTitle}>
-          To track your Orders, Order first!
-        </Text>
+        <Text style={cstyle.emptyTitle}>No orders to track!</Text>
         <Text style={cstyle.emptydes} numberOfLines={1}>
-          It's a good day to buy the items you might need later!
+          It's a good day to buys the items you might need later!
         </Text>
         <View style={cstyle.browse}>
           <Button
             color={Colors.primary}
             title="Browse Products"
             onPress={() => {
-              // props.navigation.pop();
+              props.navigation.navigate("ProductsOverview");
             }}
           />
         </View>
@@ -41,6 +39,7 @@ const OrderScreen = (props) => {
         total_amount={itemData.item.total_amt}
         datee={itemData.item.readableDate}
         cartyItem={itemData.item.items}
+        productDetailsProps={props.navigation}
       />
     );
   };

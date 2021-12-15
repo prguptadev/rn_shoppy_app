@@ -34,12 +34,12 @@ const OrderItem = (props) => {
                 productsss.find((prod) => cartitem.productId === prod.id)
                   .imageUrl
               }
-              // onViewDetails={() => {
-              //   props.navigation.navigate("ProductDetailee", {
-              //     productId: cartitem.productId,
-              //     productTitle: cartitem.productTitle,
-              //   });
-              // }}
+              onViewDetails={() => {
+                props.productDetailsProps.navigate("ProductDetail", {
+                  productId: cartitem.productId,
+                  productTitle: cartitem.productTitle,
+                });
+              }}
             />
           ))}
         </View>

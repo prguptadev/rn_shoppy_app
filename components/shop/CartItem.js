@@ -2,9 +2,7 @@ import React from "react";
 import {
   StyleSheet,
   Text,
-  Button,
   View,
-  ScrollView,
   Image,
   TouchableOpacity,
   TouchableNativeFeedback,

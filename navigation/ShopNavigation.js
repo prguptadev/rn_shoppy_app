@@ -25,8 +25,8 @@ const defaultNavigate = {
 const ProductsNavigator = createStackNavigator(
   {
     ProductsOverview: { screen: ProductsOverviewScreen },
-    ProductDetail: ProductDetailScreen,
     CartScreens: CartScreen,
+    ProductDetail: ProductDetailScreen,
   },
   {
     navigationOptions: {
@@ -46,7 +46,8 @@ const ProductsNavigator = createStackNavigator(
 const OrdersNavigation = createStackNavigator(
   {
     orders: OrderScreen,
-    ProductDetailee: ProductDetailScreen,
+    //ProductsOverview: ProductsOverviewScreen,
+    ProductDetail: ProductDetailScreen,
   },
   {
     navigationOptions: {
