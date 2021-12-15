@@ -3,10 +3,11 @@ import { StyleSheet, View, Text, Button } from "react-native";
 import CartItem from "./CartItem";
 import Colors from "../../constants/Colors";
 import { useSelector } from "react-redux";
+import PRODUCTS from "../../data/dummy-data ";
 
 const OrderItem = (props) => {
   const [showDetail, setShowDetail] = useState(false);
-  const productsss = useSelector((state) => state.products.avaiableProducts);
+  const productsss = PRODUCTS; //useSelector((state) => state.products.avaiableProducts);
 
   return (
     <View style={ostyle.orderItem}>
@@ -16,7 +17,7 @@ const OrderItem = (props) => {
       </View>
       <Button
         color={Colors.primary}
-        title="Show Details"
+        title={showDetail ? "Hide Details" : "Show Details"}
         onPress={() => {
           setShowDetail((prevState) => !prevState);
         }}

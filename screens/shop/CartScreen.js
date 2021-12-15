@@ -14,11 +14,12 @@ import CartItem from "../../components/shop/CartItem";
 import Colors from "../../constants/Colors";
 import * as CartActions from "../../store/actions/Cart";
 import * as OrderAction from "../../store/actions/Order";
+import PRODUCTS from "../../data/dummy-data ";
 
 const CartScreen = (props) => {
   let totalQuantity = 0;
   // const cartItems = useSelector((state) => state.cart.items); // gives object convert to array
-  const productsss = useSelector((state) => state.products.avaiableProducts);
+  const productsss = PRODUCTS; //useSelector((state) => state.products.avaiableProducts);
   const emptyImageUrl = useSelector((state) => state.cart.emptyImageUrl);
   // "https://rukminim1.flixcart.com/www/800/800/promos/16/05/2019/d438a32e-765a-4d8b-b4a6-520b560971e8.png?q=90";
   const cartItems = useSelector((state) => {
@@ -57,7 +58,7 @@ const CartScreen = (props) => {
             color={Colors.primary}
             title="Browse Products"
             onPress={() => {
-              props.navigation.popToTop();
+              props.navigation.navigate("ProductsOverview");
             }}
           />
         </View>
