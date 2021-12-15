@@ -57,7 +57,7 @@ const CartScreen = (props) => {
             color={Colors.primary}
             title="Browse Products"
             onPress={() => {
-              props.navigation.pop();
+              props.navigation.popToTop();
             }}
           />
         </View>
@@ -70,7 +70,7 @@ const CartScreen = (props) => {
     const imageforprodID = productsss.find(
       (prod) => itemData.item.productId === prod.id
     );
-    // console.log(imageforprodID);
+    //  console.log(props.navigation);
     return (
       <CartItem
         c_image={imageforprodID.imageUrl}

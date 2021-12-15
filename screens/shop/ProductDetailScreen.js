@@ -12,12 +12,27 @@ import Colors from "../../constants/Colors";
 import * as CartActions from "../../store/actions/Cart";
 import CartButton from "../../components/UI/CartButton";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
+import * as OrderAction from "../../store/actions/Order";
+
 
 const ProductDetailScreen = (props) => {
   const productId = props.navigation.getParam("productId");
   const selectedProduct = useSelector((state) =>
     state.products.avaiableProducts.find((prod) => prod.id === productId)
   );
+
+  const transformedbuyItem = [];
+  transformedbuyItem.push({
+    productId: selectedProduct.id,
+    productTitle: selectedProduct.title,
+    productPrice: selectedProduct.price,
+    quantity: parseInt(1),
+    sum: selectedProduct.price,
+  });
+
+  // return transformedCartItem;// because auto arrange
+  transformedbuyItem.sort((a, b) => (a.productId > b.productId ? 1 : -1));
+
   const dispatch = useDispatch();
 
   return (
@@ -35,6 +50,16 @@ const ProductDetailScreen = (props) => {
               dispatch(CartActions.addToCart(selectedProduct));
             }}
           />
+          <Button
+            color={Colors.primary}
+            title="Buy Now"
+            onPress={() => {
+              //  dispatch(CartActions.addToCart(selectedProduct));
+              dispatch(
+                OrderAction.addOrder(transformedbuyItem, selectedProduct.price)
+              );
+            }}
+          />
         </View>
         <Text style={dstyle.price}>${selectedProduct.price.toFixed(2)}</Text>
         <Text style={dstyle.descrip}>{selectedProduct.description}</Text>
@@ -46,17 +71,28 @@ const ProductDetailScreen = (props) => {
 ProductDetailScreen.navigationOptions = (navData) => {
   return {
     headerTitle: navData.navigation.getParam("productTitle"),
-    headerLeft: () => (
+    headerRight: () => (
       <HeaderButtons HeaderButtonComponent={CartButton}>
         <Item
-          title="Menu"
-          iconName="ios-menu"
+          title="Cart"
+          iconName="ios-cart"
           onPress={() => {
-            navData.navigation.toggleDrawer();
+            navData.navigation.navigate("CartScreens");
           }}
         />
       </HeaderButtons>
     ),
+    // headerLeft: () => (
+    //   <HeaderButtons HeaderButtonComponent={CartButton}>
+    //     <Item
+    //       title="Menu"
+    //       iconName="ios-menu"
+    //       onPress={() => {
+    //         navData.navigation.toggleDrawer();
+    //       }}
+    //     />
+    //   </HeaderButtons>
+    // ),
   };
 };
 
@@ -80,7 +116,9 @@ const dstyle = StyleSheet.create({
     fontFamily: "my-open-sans",
   },
   actions: {
+    flexDirection: "row",
     marginVertical: 15,
     alignItems: "center",
+    justifyContent: "space-evenly",
   },
 });
