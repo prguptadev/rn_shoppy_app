@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import CartItem from "./CartItem";
 import Colors from "../../constants/Colors";
 import PRODUCTS from "../../data/dummy-data ";
+import Card from "../UI/Card";
 
 const OrderItem = (props) => {
   const [showDetail, setShowDetail] = useState(false);
@@ -13,7 +14,7 @@ const OrderItem = (props) => {
   );
 
   const productDetailHAndler = (produdctID, productTitle) => {
-    console.log(exitingProduct.findIndex((prod) => prod.id === produdctID));
+    //  console.log(exitingProduct.findIndex((prod) => prod.id === produdctID));
     if (exitingProduct.findIndex((prod) => prod.id === produdctID) >= 0) {
       return props.productDetailsProps.navigate("ProductDetail", {
         productId: produdctID,
@@ -27,7 +28,7 @@ const OrderItem = (props) => {
   };
 
   return (
-    <View style={ostyle.orderItem}>
+    <Card style={ostyle.orderItem}>
       <View style={ostyle.summary}>
         <Text style={ostyle.amount}>${props.total_amount.toFixed(2)}</Text>
         <Text style={ostyle.datee}>{props.datee}</Text>
@@ -59,18 +60,18 @@ const OrderItem = (props) => {
           ))}
         </View>
       )}
-    </View>
+    </Card>
   );
 };
 
 const ostyle = StyleSheet.create({
   orderItem: {
-    shadowColor: "black",
-    shadowOpacity: 0.8,
-    shadowOffset: { width: 0, height: 4 },
-    shadowRadius: 8,
-    elevation: 5,
-    backgroundColor: "white",
+    // shadowColor: "black",
+    // shadowOpacity: 0.8,
+    // shadowOffset: { width: 0, height: 4 },
+    // shadowRadius: 8,
+    // elevation: 5,
+    // backgroundColor: "white",
     flexDirection: "column",
     // justifyContent: "space-evenly",
     padding: 10,
