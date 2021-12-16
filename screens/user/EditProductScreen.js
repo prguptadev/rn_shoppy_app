@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { Text, TextInput, StyleSheet, ScrollView, View } from "react-native";
 import { useSelector } from "react-redux";
 import CartButton from "../../components/UI/CartButton";
@@ -14,10 +14,20 @@ const EditProductScreen = (props) => {
   const [imageUrl, setImageUrl] = useState(
     editedProduct ? editedProduct.imageUrl : ""
   );
-  const [price, setPrice] = useState(editedProduct ? editedProduct.price : "");
+  const [price, setPrice] = useState(
+    editedProduct ? editedProduct.price.toFixed(2) : ""
+  );
   const [description, setDescription] = useState(
     editedProduct ? editedProduct.description : ""
   );
+
+  const submitHandler = useCallback(() => {
+    console.log("Submitting");
+  }, []);
+
+  useEffect(() => {
+    props.navigation.setParams({ submit: submitHandler });
+  }, [submitHandler]);
 
   return (
     <ScrollView>
@@ -42,7 +52,7 @@ const EditProductScreen = (props) => {
           <Text style={styles.label}>Price :</Text>
           <TextInput
             style={styles.input}
-            value={"$ " + price.toFixed(2)}
+            value={price}
             onChangeText={(text) => setPrice(text)}
           />
         </View>
@@ -60,13 +70,14 @@ const EditProductScreen = (props) => {
 };
 
 EditProductScreen.navigationOptions = (navData) => {
+  const submitFn = navData.navigation.getParam("submit");
   return {
     headerTitle: navData.navigation.getParam("productId")
       ? "Edit Product"
       : "Add Product",
     headerRight: () => (
       <HeaderButtons HeaderButtonComponent={CartButton}>
-        <Item title="save" iconName="ios-save" onPress={() => {}} />
+        <Item title="save" iconName="ios-checkmark" onPress={submitFn} />
       </HeaderButtons>
     ),
   };
