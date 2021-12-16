@@ -5,7 +5,7 @@ const PRODUCTS = [
     "p0",
     "u0",
     "New Shoes",
-    "https://assets.myntassets.com/f_webp,dpr_1.0,q_60,w_210,c_limit,fl_progressive/assets/images/7741225/2018/11/6/17b6de13-4107-479a-a32a-07f98fd2cc3f1541491577565-Eego-Italy-Men-Black-Leather-High-Top-Trekking-Shoes-4121541491577381-1.jpg",
+    "https://cdn.pixabay.com/photo/2016/11/19/18/06/feet-1840619_960_720.jpg",
     "New Denim Black Boots",
     23.23
   ),
@@ -13,7 +13,7 @@ const PRODUCTS = [
     "p1",
     "u1",
     "Red Shirt",
-    "https://cdn.pixabay.com/photo/2016/10/02/22/17/red-t-shirt-1710578_1280.jpg",
+    "https://cdn.pixabay.com/photo/2017/10/13/05/26/silk-tie-2846862_960_720.jpg",
     "A red t-shirt, perfect for days with non-red weather.",
     29.99
   ),
@@ -21,7 +21,7 @@ const PRODUCTS = [
     "p2",
     "u1",
     "Blue Carpet",
-    "https://images.pexels.com/photos/6292/blue-pattern-texture-macro.jpg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
+    "https://cdn.pixabay.com/photo/2015/03/03/15/04/feather-657483_960_720.jpg",
     "Fits your red shirt perfectly. To stand on. Not to wear it.",
     99.99
   ),
@@ -45,7 +45,7 @@ const PRODUCTS = [
     "p5",
     "u3",
     "PowerBook",
-    "https://get.pxhere.com/photo/laptop-computer-macbook-mac-screen-water-board-keyboard-technology-air-mouse-photo-airport-aircraft-tablet-aviation-office-black-monitor-keys-graphic-hardware-image-pc-exhibition-multimedia-calculator-vector-water-cooling-floppy-disk-phased-out-desktop-computer-netbook-personal-computer-computer-monitor-electronic-device-computer-hardware-display-device-448748.jpg",
+    "https://cdn.pixabay.com/photo/2020/10/21/18/07/laptop-5673901_960_720.jpg",
     "Awesome hardware, crappy keyboard and a hefty price. Buy now before a new one is released!",
     2299.99
   ),

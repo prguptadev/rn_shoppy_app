@@ -1,10 +1,12 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { Text, TextInput, StyleSheet, ScrollView, View } from "react-native";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import CartButton from "../../components/UI/CartButton";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
+import * as ProductAction from "../../store/actions/Product";
 
 const EditProductScreen = (props) => {
+  const dispatch = useDispatch();
   const productId = props.navigation.getParam("productId");
   const editedProduct = useSelector((state) =>
     state.products.userProducts.find((prod) => prod.id === productId)
@@ -14,6 +16,7 @@ const EditProductScreen = (props) => {
   const [imageUrl, setImageUrl] = useState(
     editedProduct ? editedProduct.imageUrl : ""
   );
+
   const [price, setPrice] = useState(
     editedProduct ? editedProduct.price.toFixed(2) : ""
   );
@@ -23,7 +26,25 @@ const EditProductScreen = (props) => {
 
   const submitHandler = useCallback(() => {
     console.log("Submitting");
-  }, []);
+    //price// for now I am removing price because of toFixed issue may be later will add it
+
+    if (editedProduct) {
+      dispatch(
+        ProductAction.updateProduct(
+          productId,
+          title,
+          description,
+          imageUrl,
+          +price
+        )
+      );
+    } else {
+      dispatch(
+        ProductAction.createProduct(title, description, imageUrl, +price)
+      );
+    }
+    props.navigation.goBack();
+  }, [dispatch, productId, title, description, imageUrl, price]);
 
   useEffect(() => {
     props.navigation.setParams({ submit: submitHandler });
@@ -48,6 +69,7 @@ const EditProductScreen = (props) => {
             onChangeText={(text) => setImageUrl(text)}
           />
         </View>
+
         <View style={styles.formControl}>
           <Text style={styles.label}>Price :</Text>
           <TextInput
@@ -56,6 +78,7 @@ const EditProductScreen = (props) => {
             onChangeText={(text) => setPrice(text)}
           />
         </View>
+
         <View style={styles.formControl}>
           <Text style={styles.label}>Description :</Text>
           <TextInput

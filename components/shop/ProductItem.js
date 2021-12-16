@@ -8,6 +8,7 @@ import {
   TouchableNativeFeedback,
   Platform,
 } from "react-native";
+import Card from "../UI/Card";
 
 const ProductItem = (props) => {
   let TouchableCmp = TouchableOpacity;
@@ -15,7 +16,7 @@ const ProductItem = (props) => {
     TouchableCmp = TouchableNativeFeedback;
   }
   return (
-    <View style={pistyle.product}>
+    <Card style={pistyle.product}>
       <View style={pistyle.touchable}>
         <TouchableCmp onPress={props.onSelect} useForeground>
           <View>
@@ -32,7 +33,7 @@ const ProductItem = (props) => {
           </View>
         </TouchableCmp>
       </View>
-    </View>
+    </Card>
   );
 };
 
@@ -40,13 +41,14 @@ export default ProductItem;
 
 const pistyle = StyleSheet.create({
   product: {
-    shadowColor: "black",
-    shadowOpacity: 0.26,
-    shadowOffset: { width: 0, height: 2 },
-    shadowRadius: 8,
-    elevation: 5,
-    borderRadius: 10,
-    backgroundColor: "white",
+    // shadowColor: "black",
+    // shadowOpacity: 0.26,
+    // shadowOffset: { width: 0, height: 2 },
+    // shadowRadius: 8,
+    // elevation: 5,
+    // borderRadius: 10,
+    // backgroundColor: "white",
+    /// common used revamp making component as card
     height: 300,
     margin: 15,
     //  overflow: "hidden",
