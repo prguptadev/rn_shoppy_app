@@ -98,7 +98,9 @@ const CartScreen = (props) => {
         <View style={cstyle.summary}>
           <Text style={cstyle.summaryText}>
             Total:{" "}
-            <Text style={cstyle.amount}>${Cart_total_amt.toFixed(2)}</Text>
+            <Text style={cstyle.amount}>
+              ${Math.round(Cart_total_amt.toFixed(2) * 100) / 100}
+            </Text>
           </Text>
           <Button
             color={Colors.accent}
