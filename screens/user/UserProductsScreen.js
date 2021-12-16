@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, FlatList, Button } from "react-native";
+import { StyleSheet, FlatList, Button, Alert } from "react-native";
 import ProductItem from "../../components/shop/ProductItem";
 import { useSelector, useDispatch } from "react-redux";
 import CartButton from "../../components/UI/CartButton";
@@ -12,13 +12,30 @@ const UserProductsScreen = (props) => {
   const userProduct = useSelector((state) => state.products.userProducts);
   const dispatch = useDispatch();
 
+  const deleteHandler = (id) => {
+    Alert.alert("Are you sure?", "Do you eally want to delete this item", [
+      { text: "NO", style: "default" },
+      {
+        text: "YES",
+        style: "destructive",
+        onPress: () => {
+          dispatch(ProductActions.deleteProduct(id));
+        },
+      },
+    ]);
+  };
+
   const renderUserProduct = (itemData) => {
     return (
       <ProductItem
         image={itemData.item.imageUrl}
         title={itemData.item.title}
         price={itemData.item.price}
-        onSelect={() => {}}
+        onSelect={() => {
+          props.navigation.navigate("EditProduct", {
+            productId: itemData.item.id,
+          });
+        }}
       >
         <Button
           color={Colors.primary}
@@ -32,9 +49,10 @@ const UserProductsScreen = (props) => {
         <Button
           color={Colors.primary}
           title="Delete"
-          onPress={() => {
-            dispatch(ProductActions.deleteProduct(itemData.item.id));
-          }}
+          // onPress={() => {
+          //   deleteHandler(itemData.item.id); // or just like {deleteHandler.bind(this,itemData.item.id)}
+          // }}
+          onPress={deleteHandler.bind(this, itemData.item.id)}
         />
       </ProductItem>
     );

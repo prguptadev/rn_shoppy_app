@@ -15,11 +15,12 @@ import Colors from "../../constants/Colors";
 import * as CartActions from "../../store/actions/Cart";
 import * as OrderAction from "../../store/actions/Order";
 import PRODUCTS from "../../data/dummy-data ";
+import Card from "../../components/UI/Card";
 
 const CartScreen = (props) => {
   let totalQuantity = 0;
   // const cartItems = useSelector((state) => state.cart.items); // gives object convert to array
-  const productsss = PRODUCTS; //useSelector((state) => state.products.avaiableProducts);
+  const productsss = PRODUCTS; // useSelector((state) => state.products.avaiableProducts);
   const emptyImageUrl = useSelector((state) => state.cart.emptyImageUrl);
   // "https://rukminim1.flixcart.com/www/800/800/promos/16/05/2019/d438a32e-765a-4d8b-b4a6-520b560971e8.png?q=90";
   const cartItems = useSelector((state) => {
@@ -95,10 +96,12 @@ const CartScreen = (props) => {
   return (
     <View>
       <View style={cstyle.screen}>
-        <View style={cstyle.summary}>
+        <Card style={cstyle.summary}>
           <Text style={cstyle.summaryText}>
             Total:{" "}
-            <Text style={cstyle.amount}>${Cart_total_amt.toFixed(2)}</Text>
+            <Text style={cstyle.amount}>
+              ${Math.round(Cart_total_amt.toFixed(2) * 100) / 100}
+            </Text>
           </Text>
           <Button
             color={Colors.accent}
@@ -108,7 +111,7 @@ const CartScreen = (props) => {
               dispatch(OrderAction.addOrder(cartItems, Cart_total_amt));
             }}
           />
-        </View>
+        </Card>
       </View>
       <View style={cstyle.itemmsg}>
         <Text style={cstyle.itemcount}>{cartItems.length} Item Selected</Text>
@@ -138,13 +141,13 @@ const cstyle = StyleSheet.create({
     justifyContent: "space-between",
     marginBottom: 10,
     padding: 10,
-    shadowColor: "black",
-    shadowOpacity: 0.26,
-    shadowOffset: { width: 0, height: 2 },
-    shadowRadius: 8,
-    elevation: 5,
-    borderRadius: 10,
-    backgroundColor: "white",
+    // shadowColor: "black",
+    // shadowOpacity: 0.26,
+    // shadowOffset: { width: 0, height: 2 },
+    // shadowRadius: 8,
+    // elevation: 5,
+    // borderRadius: 10,
+    // backgroundColor: "white",
   },
   summaryText: {
     fontFamily: "my-open-sans-bold",
