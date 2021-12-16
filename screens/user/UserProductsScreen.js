@@ -18,7 +18,11 @@ const UserProductsScreen = (props) => {
         image={itemData.item.imageUrl}
         title={itemData.item.title}
         price={itemData.item.price}
-        onSelect={() => {}}
+        onSelect={() => {
+          props.navigation.navigate("EditProduct", {
+            productId: itemData.item.id,
+          });
+        }}
       >
         <Button
           color={Colors.primary}
