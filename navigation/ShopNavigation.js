@@ -7,8 +7,11 @@ import ProductsOverviewScreen from "../screens/shop/ProductsOverviewScreen";
 import ProductDetailScreen from "../screens/shop/ProductDetailScreen";
 import OrderScreen from "../screens/shop/OrdersScreen";
 import CartScreen from "../screens/shop/CartScreen";
+import UserProductsScreen from "../screens/user/UserProductsScreen";
+import EditProductScreen from "../screens/user/EditProductScreen";
 import Colors from "../constants/Colors";
 import { Ionicons } from "@expo/vector-icons";
+
 const defaultNavigate = {
   headerStyle: {
     backgroundColor: Platform.OS === "android" ? Colors.primary : "white",
@@ -46,14 +49,36 @@ const ProductsNavigator = createStackNavigator(
 const OrdersNavigation = createStackNavigator(
   {
     orders: OrderScreen,
-    //ProductsOverview: ProductsOverviewScreen,
     ProductDetail: ProductDetailScreen,
+    //ProductsOverview: { screen: ProductsOverviewScreen },
+    CartScreens: CartScreen,
+    // ProductsOverviews: ProductsOverviewScreen,
   },
   {
     navigationOptions: {
       drawerIcon: (drawerConfig) => (
         <Ionicons
           name={Platform.OS === "android" ? "md-list" : "ios-list"}
+          size={23}
+          color={drawerConfig.tintColor}
+        ></Ionicons>
+      ),
+    },
+    defaultNavigationOptions: defaultNavigate,
+    initialRouteName: "orders",
+  }
+);
+
+const AdminNavigation = createStackNavigator(
+  {
+    userProduct: UserProductsScreen,
+    EditProduct: EditProductScreen,
+  },
+  {
+    navigationOptions: {
+      drawerIcon: (drawerConfig) => (
+        <Ionicons
+          name="logo-ionic"
           size={23}
           color={drawerConfig.tintColor}
         ></Ionicons>
@@ -67,11 +92,14 @@ const ShopNavigator = createDrawerNavigator(
   {
     Home: ProductsNavigator,
     Orders: OrdersNavigation,
+    Admin: AdminNavigation,
   },
   {
     contentOptions: {
       activeTintColor: Colors.primary,
     },
+    // Home: ProductsNavigator,
+    // initialRouteName: "Home",
   }
 );
 
