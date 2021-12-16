@@ -1,12 +1,30 @@
 import React, { useState } from "react";
-import { StyleSheet, View, Text, Button } from "react-native";
+import { StyleSheet, View, Text, Button, Alert } from "react-native";
+import { useSelector } from "react-redux";
 import CartItem from "./CartItem";
 import Colors from "../../constants/Colors";
-import { useSelector } from "react-redux";
+import PRODUCTS from "../../data/dummy-data ";
 
 const OrderItem = (props) => {
   const [showDetail, setShowDetail] = useState(false);
-  const productsss = useSelector((state) => state.products.avaiableProducts);
+  const productsss = PRODUCTS; //useSelector((state) => state.products.avaiableProducts);
+  const exitingProduct = useSelector(
+    (state) => state.products.avaiableProducts
+  );
+
+  const productDetailHAndler = (produdctID, productTitle) => {
+    console.log(exitingProduct.findIndex((prod) => prod.id === produdctID));
+    if (exitingProduct.findIndex((prod) => prod.id === produdctID) >= 0) {
+      return props.productDetailsProps.navigate("ProductDetail", {
+        productId: produdctID,
+        productTitle: productTitle,
+      });
+    }
+
+    return Alert.alert("Oops!!", "Product no longer with us", [
+      { text: "OKAY", style: "destructive" },
+    ]);
+  };
 
   return (
     <View style={ostyle.orderItem}>
@@ -16,7 +34,7 @@ const OrderItem = (props) => {
       </View>
       <Button
         color={Colors.primary}
-        title="Show Details"
+        title={showDetail ? "Hide Details" : "Show Details"}
         onPress={() => {
           setShowDetail((prevState) => !prevState);
         }}
@@ -35,10 +53,7 @@ const OrderItem = (props) => {
                   .imageUrl
               }
               onViewDetails={() => {
-                props.productDetailsProps.navigate("ProductDetail", {
-                  productId: cartitem.productId,
-                  productTitle: cartitem.productTitle,
-                });
+                productDetailHAndler(cartitem.productId, cartitem.productTitle);
               }}
             />
           ))}

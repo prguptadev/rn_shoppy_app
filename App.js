@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { StatusBar } from "expo-status-bar";
 import { StyleSheet } from "react-native";
 import { Provider } from "react-redux";
 import * as Font from "expo-font";
@@ -47,6 +48,7 @@ export default function App() {
 
   return (
     <Provider store={store}>
+      <StatusBar style="auto" />
       <ShopNavigation />
     </Provider>
   );
