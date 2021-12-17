@@ -1,5 +1,12 @@
 import React, { useState, useEffect, useCallback } from "react";
-import { Text, TextInput, StyleSheet, ScrollView, View } from "react-native";
+import {
+  Text,
+  TextInput,
+  StyleSheet,
+  ScrollView,
+  View,
+  Alert,
+} from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import CartButton from "../../components/UI/CartButton";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
@@ -13,6 +20,7 @@ const EditProductScreen = (props) => {
   );
 
   const [title, setTitle] = useState(editedProduct ? editedProduct.title : "");
+  const [titleIsValid, setTitleIsValid] = useState(false);
   const [imageUrl, setImageUrl] = useState(
     editedProduct ? editedProduct.imageUrl : ""
   );
@@ -27,7 +35,12 @@ const EditProductScreen = (props) => {
   const submitHandler = useCallback(() => {
     console.log("Submitting");
     //price// for now I am removing price because of toFixed issue may be later will add it
-
+    if (!titleIsValid) {
+      Alert.alert("Wrong Input!", "Please check the errors in the form", [
+        { text: "OKAY", style: "destructive" },
+      ]);
+      return;
+    }
     if (editedProduct) {
       dispatch(
         ProductAction.updateProduct(
@@ -50,6 +63,15 @@ const EditProductScreen = (props) => {
     props.navigation.setParams({ submit: submitHandler });
   }, [submitHandler]);
 
+  const titleHandler = (text) => {
+    if (text.trim().length === 0) {
+      setTitleIsValid(false);
+    } else {
+      setTitleIsValid(true);
+    }
+    setTitle(text);
+  };
+
   return (
     <ScrollView>
       <View style={styles.form}>
@@ -58,12 +80,15 @@ const EditProductScreen = (props) => {
           <TextInput
             style={styles.input}
             value={title}
-            onChangeText={(text) => setTitle(text)}
+            onChangeText={titleHandler}
             returnKeyType="next"
             onEndEditing={() => {
               console.log("onEndEditing");
             }}
           />
+          {!titleIsValid && (
+            <Text style={{ color: "red" }}>Please enter Valid Title</Text>
+          )}
         </View>
         <View style={styles.formControl}>
           <Text style={styles.label}>ImageURL :</Text>
