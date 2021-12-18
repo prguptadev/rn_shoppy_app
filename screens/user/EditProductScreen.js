@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useReducer } from "react";
 import {
   Text,
   TextInput,
@@ -11,6 +11,8 @@ import { useSelector, useDispatch } from "react-redux";
 import CartButton from "../../components/UI/CartButton";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import * as ProductAction from "../../store/actions/Product";
+
+const formReducer = (state, action) => {};
 
 const EditProductScreen = (props) => {
   const dispatch = useDispatch();
@@ -57,7 +59,7 @@ const EditProductScreen = (props) => {
       );
     }
     props.navigation.goBack();
-  }, [dispatch, productId, title, description, imageUrl, price]);
+  }, [dispatch, productId, title, description, imageUrl, price, titleIsValid]);
 
   useEffect(() => {
     props.navigation.setParams({ submit: submitHandler });

@@ -8,7 +8,7 @@ import Card from "../UI/Card";
 
 const OrderItem = (props) => {
   const [showDetail, setShowDetail] = useState(false);
-  const productsss = PRODUCTS; //useSelector((state) => state.products.avaiableProducts);
+  const productsss = useSelector((state) => state.products.avaiableProducts); //PRODUCTS; //
   const exitingProduct = useSelector(
     (state) => state.products.avaiableProducts
   );
