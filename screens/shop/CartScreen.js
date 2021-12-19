@@ -20,7 +20,7 @@ import Card from "../../components/UI/Card";
 const CartScreen = (props) => {
   let totalQuantity = 0;
   // const cartItems = useSelector((state) => state.cart.items); // gives object convert to array
-  const productsss = PRODUCTS; // useSelector((state) => state.products.avaiableProducts);
+  const productsss = useSelector((state) => state.products.avaiableProducts); //PRODUCTS; //
   const emptyImageUrl = useSelector((state) => state.cart.emptyImageUrl);
   // "https://rukminim1.flixcart.com/www/800/800/promos/16/05/2019/d438a32e-765a-4d8b-b4a6-520b560971e8.png?q=90";
   const cartItems = useSelector((state) => {
@@ -109,6 +109,7 @@ const CartScreen = (props) => {
             disabled={cartItems.length === 0}
             onPress={() => {
               dispatch(OrderAction.addOrder(cartItems, Cart_total_amt));
+              props.navigation.navigate("orders");
             }}
           />
         </Card>

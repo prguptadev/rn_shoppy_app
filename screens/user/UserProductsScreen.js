@@ -13,7 +13,7 @@ const UserProductsScreen = (props) => {
   const dispatch = useDispatch();
 
   const deleteHandler = (id) => {
-    Alert.alert("Are you sure?", "Do you eally want to delete this item", [
+    Alert.alert("Are you sure?", "Do you really want to delete this item", [
       { text: "NO", style: "default" },
       {
         text: "YES",
