@@ -14,7 +14,6 @@ import CartButton from "../../components/UI/CartButton";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import * as OrderAction from "../../store/actions/Order";
 
-
 const ProductDetailScreen = (props) => {
   const productId = props.navigation.getParam("productId");
   const selectedProduct = useSelector((state) =>
@@ -48,6 +47,7 @@ const ProductDetailScreen = (props) => {
             title="Add To Cart"
             onPress={() => {
               dispatch(CartActions.addToCart(selectedProduct));
+              props.navigation.navigate("CartScreens");
             }}
           />
           <Button
@@ -58,6 +58,7 @@ const ProductDetailScreen = (props) => {
               dispatch(
                 OrderAction.addOrder(transformedbuyItem, selectedProduct.price)
               );
+              props.navigation.navigate("orders");
             }}
           />
         </View>

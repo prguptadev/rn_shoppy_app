@@ -109,6 +109,7 @@ const CartScreen = (props) => {
             disabled={cartItems.length === 0}
             onPress={() => {
               dispatch(OrderAction.addOrder(cartItems, Cart_total_amt));
+              props.navigation.navigate("orders");
             }}
           />
         </Card>

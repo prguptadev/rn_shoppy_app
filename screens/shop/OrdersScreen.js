@@ -1,5 +1,13 @@
 import React from "react";
-import { FlatList, StyleSheet, View, Text, Button, Image } from "react-native";
+import {
+  FlatList,
+  StyleSheet,
+  View,
+  Text,
+  Button,
+  Image,
+  Platform,
+} from "react-native";
 import { useSelector } from "react-redux";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import CartButton from "../../components/UI/CartButton";
