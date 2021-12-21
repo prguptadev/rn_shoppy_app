@@ -62,14 +62,16 @@ const Input = (props) => {
         style={styles.input}
         value={inputState.value}
         onChangeText={textChangeHandler}
-        returnKeyType="next"
+        //returnKeyType="next"
         onBlur={lostFocusHandler}
         onEndEditing={() => {
           console.log("onEndEditing");
         }}
       />
-      {!inputState.isValid && (
-        <Text style={{ color: "red" }}>{props.errorText}</Text>
+      {!inputState.isValid && inputState.touched && (
+        <View style={styles.errorConatiner}>
+          <Text style={styles.errorText}>{props.errorText}</Text>
+        </View>
       )}
     </View>
   );
@@ -88,6 +90,14 @@ const styles = StyleSheet.create({
     paddingVertical: 5,
     borderBottomColor: "#ccc",
     borderBottomWidth: 1,
+  },
+  errorConatiner: {
+    marginVertical: 5,
+  },
+  errorText: {
+    color: "red",
+    fontFamily: "my-open-sans",
+    fontSize: 13,
   },
 });
 
