@@ -7,30 +7,38 @@ export const FETCHS_PRODUCT = "FETCH_PRODUCT";
 
 export const fetchProduct = () => {
   return async (dispatch) => {
-    const responseProduct = await fetch(
-      "https://rn-shoppy-app-default-rtdb.firebaseio.com/products.json"
-    );
-
-    const resProdData = await responseProduct.json();
-    const loadedProducts = [];
-    for (const key in resProdData) {
-      loadedProducts.push(
-        new Product(
-          key,
-          "u1",
-          resProdData[key].title,
-          resProdData[key].imageurl,
-          resProdData[key].description,
-          resProdData[key].price
-        )
+    try {
+      const responseProduct = await fetch(
+        "https://rn-shoppy-app-default-rtdb.firebaseio.com/products.json"
       );
-    }
-    // console.log(loadedProducts);
+      if (!responseProduct.ok) {
+        throw new Error("Something went wrong");
+      }
 
-    dispatch({
-      type: FETCHS_PRODUCT,
-      products: loadedProducts,
-    });
+      const resProdData = await responseProduct.json();
+      const loadedProducts = [];
+      for (const key in resProdData) {
+        loadedProducts.push(
+          new Product(
+            key,
+            "u1",
+            resProdData[key].title,
+            resProdData[key].imageurl,
+            resProdData[key].description,
+            resProdData[key].price
+          )
+        );
+      }
+      // console.log(loadedProducts);
+
+      dispatch({
+        type: FETCHS_PRODUCT,
+        products: loadedProducts,
+      });
+    } catch (err) {
+      //send eror to log
+      throw new Error(err + " update json");
+    }
   };
 };
 
@@ -51,7 +59,6 @@ export const createProduct = (title, description, imageurl, price) => {
       }
     );
     const resData = await response.json();
-    console.log(JSON.stringify(title, description, imageurl, price));
     dispatch({
       type: CREATE_PRODUCT,
       newProduct: {

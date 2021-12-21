@@ -22,9 +22,14 @@ export default (state = initialState, action) => {
   switch (action.type) {
     case FETCHS_PRODUCT: {
       return {
-        ...state,
-        avaiableProducts: state.avaiableProducts.concat(action.products),
-        userProducts: state.userProducts.concat(action.products),
+        avaiableProducts: PRODUCTS.concat(action.products),
+        userProducts: PRODUCTS.filter(
+          (prod) =>
+            prod.ownerId === "u0" ||
+            prod.ownerId === "u1" ||
+            prod.ownerId === "u2" ||
+            prod.ownerId === "u3"
+        ).concat(action.products),
       };
     }
     case CREATE_PRODUCT:

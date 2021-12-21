@@ -1,5 +1,12 @@
-import React, { useEffect } from "react";
-import { StyleSheet, FlatList, Button } from "react-native";
+import React, { useState, useEffect, useCallback } from "react";
+import {
+  StyleSheet,
+  FlatList,
+  ActivityIndicator,
+  View,
+  Text,
+  Button,
+} from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import ProductItem from "../../components/shop/ProductItem";
 import * as CartActions from "../../store/actions/Cart";
@@ -9,12 +16,41 @@ import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import Colors from "../../constants/Colors";
 
 const ProductsOverviewScreen = (props) => {
-  const products = useSelector((state) => state.products.avaiableProducts);
+  const [loadedData, setLoadedData] = useState(false);
+  const [error, setError] = useState();
+
   const dispatch = useDispatch();
 
+  const loadProducts = useCallback(async () => {
+    //console.log("loada data");
+    setError(null);
+    setLoadedData(true);
+    try {
+      await dispatch(ProductAction.fetchProduct());
+    } catch (err) {
+      setError(err.message);
+    }
+
+    setLoadedData(false);
+  }, [dispatch, setError, setLoadedData]);
+
   useEffect(() => {
-    dispatch(ProductAction.fetchProduct());
-  }, [dispatch]);
+    const willFocusSub = props.navigation.addListener(
+      "willFocus",
+      loadProducts
+    );
+    return () => {
+      willFocusSub.remove();
+    };
+  }, [loadProducts]);
+
+  useEffect(() => {
+    loadProducts();
+  }, [loadProducts]);
+
+  const products = useSelector((state) => state.products.avaiableProducts);
+  // console.log("=====================================");
+  //console.log(products);
 
   const selectItemHandler = (id, title) => {
     props.navigation.navigate("ProductDetail", {
@@ -22,6 +58,41 @@ const ProductsOverviewScreen = (props) => {
       productTitle: title,
     });
   };
+
+  if (error) {
+    return (
+      <View style={pstyle.emptyscreen}>
+        <Text style={pstyle.emptyTitle}>Error Occured!</Text>
+        <Text style={pstyle.emptydes} numberOfLines={1}>
+          {error}!
+        </Text>
+        <Button
+          title="Try Again!"
+          onPress={loadProducts}
+          color={Colors.primary}
+        />
+      </View>
+    );
+  }
+
+  if (loadedData) {
+    return (
+      <View style={pstyle.loader}>
+        <ActivityIndicator size="large" color={Colors.primary} />
+      </View>
+    );
+  }
+
+  if (!loadedData && products.length === 0) {
+    return (
+      <View style={pstyle.emptyscreen}>
+        <Text style={pstyle.emptyTitle}>Check your internet!</Text>
+        <Text style={pstyle.emptydes} numberOfLines={1}>
+          It's a good day to buy the items you might need later!
+        </Text>
+      </View>
+    );
+  }
 
   const renderProduct = (itemData) => {
     return (
@@ -50,6 +121,7 @@ const ProductsOverviewScreen = (props) => {
       </ProductItem>
     );
   };
+
   return (
     <FlatList
       data={products}
@@ -89,4 +161,22 @@ ProductsOverviewScreen.navigationOptions = (navData) => {
 
 export default ProductsOverviewScreen;
 
-const pstyle = StyleSheet.create({});
+const pstyle = StyleSheet.create({
+  loader: { flex: 1, justifyContent: "center", alignItems: "center" },
+  emptyscreen: {
+    flex: 1,
+    backgroundColor: "white",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+
+  emptyTitle: {
+    fontFamily: "my-open-sans-bold",
+    fontSize: 20,
+  },
+  emptydes: {
+    fontFamily: "my-open-sans",
+    fontSize: 14,
+    color: "#888",
+  },
+});
