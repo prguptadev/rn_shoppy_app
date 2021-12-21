@@ -64,9 +64,9 @@ const Input = (props) => {
         onChangeText={textChangeHandler}
         //returnKeyType="next"
         onBlur={lostFocusHandler}
-        onEndEditing={() => {
-          console.log("onEndEditing");
-        }}
+        // onEndEditing={() => {
+        //   console.log("onEndEditing");
+        // }}
       />
       {!inputState.isValid && inputState.touched && (
         <View style={styles.errorConatiner}>

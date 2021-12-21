@@ -1,20 +1,67 @@
+import Product from "../../models/Product";
+
 export const DELETE_PRODUCT = "DELETE_PRODUCT";
 export const CREATE_PRODUCT = "CREATE_PRODUCT";
 export const UPDATE_PRODUCT = "UPDATE_PRODUCT";
+export const FETCHS_PRODUCT = "FETCH_PRODUCT";
+
+export const fetchProduct = () => {
+  return async (dispatch) => {
+    const responseProduct = await fetch(
+      "https://rn-shoppy-app-default-rtdb.firebaseio.com/products.json"
+    );
+
+    const resProdData = await responseProduct.json();
+    const loadedProducts = [];
+    for (const key in resProdData) {
+      loadedProducts.push(
+        new Product(
+          key,
+          "u1",
+          resProdData[key].title,
+          resProdData[key].imageurl,
+          resProdData[key].description,
+          resProdData[key].price
+        )
+      );
+    }
+    // console.log(loadedProducts);
+
+    dispatch({
+      type: FETCHS_PRODUCT,
+      products: loadedProducts,
+    });
+  };
+};
 
 export const deleteProduct = (productId) => {
   return { type: DELETE_PRODUCT, pid: productId };
 };
 
 export const createProduct = (title, description, imageurl, price) => {
-  return {
-    type: CREATE_PRODUCT,
-    newProduct: {
-      title: title,
-      description: description,
-      imageurl: imageurl,
-      price: price,
-    },
+  return async (dispatch) => {
+    //anyasync code we want
+    //by defalut its get request , for post need to pass 2nd args
+    const response = await fetch(
+      "https://rn-shoppy-app-default-rtdb.firebaseio.com/products.json",
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ title, description, imageurl, price }),
+      }
+    );
+    const resData = await response.json();
+    console.log(JSON.stringify(title, description, imageurl, price));
+    dispatch({
+      type: CREATE_PRODUCT,
+      newProduct: {
+        id: resData.name,
+        title: title,
+        description: description,
+        imageurl: imageurl,
+        price: price,
+      },
+    });
   };
 };
 

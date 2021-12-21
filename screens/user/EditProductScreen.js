@@ -73,7 +73,7 @@ const EditProductScreen = (props) => {
   // );
 
   const submitHandler = useCallback(() => {
-    console.log("Submitting");
+    //console.log("Submitting");
     //price// for now I am removing price because of toFixed issue may be later will add it
     if (!formState.formIsValid) {
       Alert.alert("Wrong Input!", "Please check the errors in the form", [
@@ -122,9 +122,9 @@ const EditProductScreen = (props) => {
 
   return (
     <KeyboardAvoidingView
-      style={{ flex: 1 }}
+      // style={{ flex: 1 }}
       behavior="padding"
-      keyboardVerticalOffset={100}
+      keyboardVerticalOffset={10}
     >
       <ScrollView>
         <View style={styles.form}>
