@@ -19,19 +19,22 @@ import Colors from "../../constants/Colors";
 const OrderScreen = (props) => {
   const [loadedData, setLoadedData] = useState(false);
   const [error, setError] = useState();
+  const [isRefreashing, setisRefreashing] = useState(false);
+
   const dispatch = useDispatch();
 
   const loadOrders = useCallback(async () => {
     setError(null);
-    setLoadedData(true);
+    // setLoadedData(true);
+    setisRefreashing(true);
     try {
       await dispatch(OrderAction.fetchOrder());
     } catch (err) {
       setError(err.message);
     }
-
-    setLoadedData(false);
-  }, [dispatch, setError, setLoadedData]);
+    //setLoadedData(false);
+    setisRefreashing(false);
+  }, [dispatch, setError, setisRefreashing]);
 
   useEffect(() => {
     const willfocusOrder = props.navigation.addListener(
@@ -44,7 +47,10 @@ const OrderScreen = (props) => {
   }, [loadOrders]);
 
   useEffect(() => {
-    loadOrders();
+    setLoadedData(true);
+    loadOrders().then(() => {
+      setLoadedData(false);
+    });
   }, [loadOrders]);
 
   const Order_Data = useSelector((state) => state.orders.OrderData);
@@ -109,6 +115,8 @@ const OrderScreen = (props) => {
   };
   return (
     <FlatList
+      onRefresh={loadOrders}
+      refreshing={loadedData}
       data={Order_Data}
       keyExtractor={(item) => item.id}
       renderItem={renderOrder}
