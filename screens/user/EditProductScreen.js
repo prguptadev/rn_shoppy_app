@@ -1,16 +1,18 @@
-import React, { useEffect, useCallback, useReducer } from "react";
+import React, { useState, useEffect, useCallback, useReducer } from "react";
 import {
   StyleSheet,
   ScrollView,
   View,
   Alert,
   KeyboardAvoidingView,
+  ActivityIndicator,
 } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import CartButton from "../../components/UI/CartButton";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import * as ProductAction from "../../store/actions/Product";
 import Input from "../../components/UI/Input";
+import Colors from "../../constants/Colors";
 
 const FORM_INPUT_UPDATE = "FORM_INPUT_UPDATE";
 const formReducer = (state, action) => {
@@ -37,6 +39,8 @@ const formReducer = (state, action) => {
 };
 
 const EditProductScreen = (props) => {
+  const [error, setError] = useState();
+  const [isLoading, setIsLoading] = useState(false);
   const productId = props.navigation.getParam("productId");
   const editedProduct = useSelector((state) =>
     state.products.userProducts.find((prod) => prod.id === productId)
@@ -59,6 +63,12 @@ const EditProductScreen = (props) => {
     formIsValid: false,
   });
 
+  useEffect(() => {
+    if (error) {
+      return Alert.alert("Oops!!", error, [{ text: "OKAY!" }]);
+    }
+  }, [error]);
+
   // const [title, setTitle] = useState(editedProduct ? editedProduct.title : "");
   // const [titleIsValid, setTitleIsValid] = useState(false);
   // const [imageUrl, setImageUrl] = useState(
@@ -72,8 +82,8 @@ const EditProductScreen = (props) => {
   //   editedProduct ? editedProduct.description : ""
   // );
 
-  const submitHandler = useCallback(() => {
-    console.log("Submitting");
+  const submitHandler = useCallback(async () => {
+    //console.log("Submitting");
     //price// for now I am removing price because of toFixed issue may be later will add it
     if (!formState.formIsValid) {
       Alert.alert("Wrong Input!", "Please check the errors in the form", [
@@ -81,27 +91,35 @@ const EditProductScreen = (props) => {
       ]);
       return;
     }
-    if (editedProduct) {
-      dispatch(
-        ProductAction.updateProduct(
-          productId,
-          formState.inputValues.title,
-          formState.inputValues.description,
-          formState.inputValues.imageUrl,
-          +formState.inputValues.price
-        )
-      );
-    } else {
-      dispatch(
-        ProductAction.createProduct(
-          formState.inputValues.title,
-          formState.inputValues.description,
-          formState.inputValues.imageUrl,
-          +formState.inputValues.price
-        )
-      );
+    setError(null);
+    setIsLoading(true);
+    try {
+      if (editedProduct) {
+        await dispatch(
+          ProductAction.updateProduct(
+            productId,
+            formState.inputValues.title,
+            formState.inputValues.description,
+            formState.inputValues.imageUrl,
+            +formState.inputValues.price
+          )
+        );
+      } else {
+        await dispatch(
+          ProductAction.createProduct(
+            formState.inputValues.title,
+            formState.inputValues.description,
+            formState.inputValues.imageUrl,
+            +formState.inputValues.price
+          )
+        );
+      }
+      props.navigation.goBack();
+    } catch (err) {
+      setError(err.message);
     }
-    props.navigation.goBack();
+
+    setIsLoading(false);
   }, [dispatch, productId, formState]);
 
   useEffect(() => {
@@ -120,11 +138,19 @@ const EditProductScreen = (props) => {
     [dispatchFormSate]
   );
 
+  if (isLoading) {
+    return (
+      <View style={styles.loader}>
+        <ActivityIndicator size="large" color={Colors.primary} />
+      </View>
+    );
+  }
+
   return (
     <KeyboardAvoidingView
-      style={{ flex: 1 }}
+      // style={{ flex: 1 }}
       behavior="padding"
-      keyboardVerticalOffset={100}
+      keyboardVerticalOffset={10}
     >
       <ScrollView>
         <View style={styles.form}>
@@ -260,6 +286,7 @@ EditProductScreen.navigationOptions = (navData) => {
 };
 
 const styles = StyleSheet.create({
+  loader: { flex: 1, justifyContent: "center", alignItems: "center" },
   form: {
     margin: 20,
   },

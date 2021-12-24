@@ -4,6 +4,7 @@ import {
   DELETE_PRODUCT,
   CREATE_PRODUCT,
   UPDATE_PRODUCT,
+  FETCHS_PRODUCT,
 } from "../actions/Product";
 
 const initialState = {
@@ -19,9 +20,21 @@ const initialState = {
 
 export default (state = initialState, action) => {
   switch (action.type) {
+    case FETCHS_PRODUCT: {
+      return {
+        avaiableProducts: PRODUCTS.concat(action.products),
+        userProducts: PRODUCTS.filter(
+          (prod) =>
+            prod.ownerId === "u0" ||
+            prod.ownerId === "u1" ||
+            prod.ownerId === "u2" ||
+            prod.ownerId === "u3"
+        ).concat(action.products),
+      };
+    }
     case CREATE_PRODUCT:
       const newProduct = new Product(
-        new Date().toString(),
+        action.newProduct.id,
         "u1",
         action.newProduct.title,
         action.newProduct.imageurl,

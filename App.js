@@ -4,13 +4,14 @@ import { StyleSheet } from "react-native";
 import { Provider } from "react-redux";
 import * as Font from "expo-font";
 import AppLoading from "expo-app-loading";
-import { createStore, combineReducers } from "redux";
+import { createStore, combineReducers, applyMiddleware } from "redux";
+import ReduxThunk from "redux-thunk";
 import ProductReducer from "./store/reducers/Product";
 import CartReducer from "./store/reducers/Cart";
 import OrderReducer from "./store/reducers/Order";
 import ShopNavigation from "./navigation/ShopNavigation";
 import { enableScreens } from "react-native-screens";
-import { composeWithDevTools } from "redux-devtools-extension";
+//import { composeWithDevTools } from "redux-devtools-extension";
 
 enableScreens();
 
@@ -20,9 +21,9 @@ const rootReducer = combineReducers({
   orders: OrderReducer,
 });
 
-//const store = createStore(rootReducer); // for production
+const store = createStore(rootReducer, applyMiddleware(ReduxThunk)); // for production
 
-const store = createStore(rootReducer, composeWithDevTools()); // for debugger
+//const store = createStore(rootReducer, composeWithDevTools()); // for debugger
 
 const fetchFonts = () => {
   return Font.loadAsync({
