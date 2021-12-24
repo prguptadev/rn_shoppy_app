@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   StyleSheet,
   FlatList,
@@ -6,8 +6,8 @@ import {
   View,
   Button,
   Image,
-  Dimensions,
   Platform,
+  ActivityIndicator,
 } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import CartItem from "../../components/shop/CartItem";
@@ -18,6 +18,8 @@ import PRODUCTS from "../../data/dummy-data ";
 import Card from "../../components/UI/Card";
 
 const CartScreen = (props) => {
+  const [isLoading, setIsLoading] = useState(false);
+
   let totalQuantity = 0;
   // const cartItems = useSelector((state) => state.cart.items); // gives object convert to array
   const productsss = useSelector((state) => state.products.avaiableProducts); //PRODUCTS; //
@@ -43,6 +45,13 @@ const CartScreen = (props) => {
   const Cart_total_amt = useSelector((state) => state.cart.totalAmount);
 
   const dispatch = useDispatch();
+
+  const sendOrderHandler = async () => {
+    setIsLoading(true);
+    await dispatch(OrderAction.addOrder(cartItems, Cart_total_amt));
+    props.navigation.navigate("orders");
+    setIsLoading(false);
+  };
 
   if (cartItems.length === 0 || !cartItems) {
     return (
@@ -73,6 +82,15 @@ const CartScreen = (props) => {
       (prod) => itemData.item.productId === prod.id
     );
     //  console.log(props.navigation);
+
+    // if (isLoading) {
+    //   return (
+    //     <View style={cstyle.loader}>
+    //       <ActivityIndicator size="large" color={Colors.primary} />
+    //     </View>
+    //   );
+    // }
+
     return (
       <CartItem
         c_image={imageforprodID.imageUrl}
@@ -103,15 +121,20 @@ const CartScreen = (props) => {
               ${Math.round(Cart_total_amt.toFixed(2) * 100) / 100}
             </Text>
           </Text>
-          <Button
-            color={Colors.accent}
-            title="Buy Now"
-            disabled={cartItems.length === 0}
-            onPress={() => {
-              dispatch(OrderAction.addOrder(cartItems, Cart_total_amt));
-              props.navigation.navigate("orders");
-            }}
-          />
+          {isLoading ? (
+            <ActivityIndicator size="small" color={Colors.primary} />
+          ) : (
+            <Button
+              color={Colors.accent}
+              title="Buy Now"
+              disabled={cartItems.length === 0}
+              // onPress={() => {
+              //   dispatch(OrderAction.addOrder(cartItems, Cart_total_amt));
+              //   props.navigation.navigate("orders");
+              // }}
+              onPress={sendOrderHandler}
+            />
+          )}
         </Card>
       </View>
       <View style={cstyle.itemmsg}>
@@ -133,6 +156,8 @@ CartScreen.navigationOptions = {
 };
 
 const cstyle = StyleSheet.create({
+  loader: { flex: 1, justifyContent: "center", alignItems: "center" },
+
   screen: {
     margin: 10,
   },

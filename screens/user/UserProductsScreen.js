@@ -1,5 +1,5 @@
-import React from "react";
-import { StyleSheet, FlatList, Button, Alert } from "react-native";
+import React, { useState, useCallback } from "react";
+import { FlatList, Button, Alert } from "react-native";
 import ProductItem from "../../components/shop/ProductItem";
 import { useSelector, useDispatch } from "react-redux";
 import CartButton from "../../components/UI/CartButton";
@@ -9,6 +9,8 @@ import * as ProductActions from "../../store/actions/Product";
 import Colors from "../../constants/Colors";
 
 const UserProductsScreen = (props) => {
+  const [error, setError] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const userProduct = useSelector((state) => state.products.userProducts);
   const dispatch = useDispatch();
 

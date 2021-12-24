@@ -12,7 +12,7 @@ export const fetchProduct = () => {
         "https://rn-shoppy-app-default-rtdb.firebaseio.com/products.json"
       );
       if (!responseProduct.ok) {
-        throw new Error("Something went wrong");
+        throw new Error("Something went wrong-FETCH");
       }
 
       const resProdData = await responseProduct.json();
@@ -43,13 +43,24 @@ export const fetchProduct = () => {
 };
 
 export const deleteProduct = (productId) => {
-  return { type: DELETE_PRODUCT, pid: productId };
+  return async (dispatch) => {
+    const response = await fetch(
+      `https://rn-shoppy-app-default-rtdb.firebaseio.com/products/${productId}.json`,
+      {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+      }
+    );
+    if (!response.ok) {
+      throw new Error("Something went wrong -DELETE");
+    }
+
+    dispatch({ type: DELETE_PRODUCT, pid: productId });
+  };
 };
 
 export const createProduct = (title, description, imageurl, price) => {
   return async (dispatch) => {
-    //anyasync code we want
-    //by defalut its get request , for post need to pass 2nd args
     const response = await fetch(
       "https://rn-shoppy-app-default-rtdb.firebaseio.com/products.json",
       {
@@ -58,6 +69,13 @@ export const createProduct = (title, description, imageurl, price) => {
         body: JSON.stringify({ title, description, imageurl, price }),
       }
     );
+    if (!response.ok) {
+      throw new Error("Something went wrong -CREATE");
+    }
+
+    //anyasync code we want
+    //by defalut its get request , for post need to pass 2nd args
+
     const resData = await response.json();
     dispatch({
       type: CREATE_PRODUCT,
@@ -73,14 +91,29 @@ export const createProduct = (title, description, imageurl, price) => {
 };
 
 export const updateProduct = (id, title, description, imageurl, price) => {
-  return {
-    type: UPDATE_PRODUCT,
-    pid: id,
-    oldProduct: {
-      title,
-      description,
-      imageurl, // can be done like this also if key and vlaue same or check in update for mapping
-      price,
-    },
+  return async (dispatch) => {
+    const response = await fetch(
+      `https://rn-shoppy-app-default-rtdb.firebaseio.com/products/${id}.json`,
+      {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ title, description, imageurl, price }),
+      }
+    );
+
+    if (!response.ok) {
+      throw new Error("Something went wrong -UPDATE");
+    }
+
+    dispatch({
+      type: UPDATE_PRODUCT,
+      pid: id,
+      oldProduct: {
+        title,
+        description,
+        imageurl, // can be done like this also if key and vlaue same or check in update for mapping
+        price,
+      },
+    });
   };
 };

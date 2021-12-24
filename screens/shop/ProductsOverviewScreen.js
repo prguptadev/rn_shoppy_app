@@ -62,8 +62,8 @@ const ProductsOverviewScreen = (props) => {
   if (error) {
     return (
       <View style={pstyle.emptyscreen}>
-        <Text style={pstyle.emptyTitle}>Error Occured!</Text>
-        <Text style={pstyle.emptydes} numberOfLines={1}>
+        <Text style={pstyle.emptyTitle}>Error !</Text>
+        <Text style={pstyle.emptydes} numberOfOccuredLines={1}>
           {error}!
         </Text>
         <Button
