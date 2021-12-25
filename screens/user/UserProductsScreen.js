@@ -62,6 +62,8 @@ const UserProductsScreen = (props) => {
 
   return (
     <FlatList
+      // onRefresh={}
+      //refreshing={isLoading}
       data={userProduct}
       keyExtractor={(item) => item.id}
       renderItem={renderUserProduct}

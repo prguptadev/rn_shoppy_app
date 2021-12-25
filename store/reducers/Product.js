@@ -23,19 +23,13 @@ export default (state = initialState, action) => {
     case FETCHS_PRODUCT: {
       return {
         avaiableProducts: PRODUCTS.concat(action.products),
-        userProducts: PRODUCTS.filter(
-          (prod) =>
-            prod.ownerId === "u0" ||
-            prod.ownerId === "u1" ||
-            prod.ownerId === "u2" ||
-            prod.ownerId === "u3"
-        ).concat(action.products),
+        userProducts: action.userProducts,
       };
     }
     case CREATE_PRODUCT:
       const newProduct = new Product(
         action.newProduct.id,
-        "u1",
+        action.newProduct.ownerId,
         action.newProduct.title,
         action.newProduct.imageurl,
         action.newProduct.description,

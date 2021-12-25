@@ -82,10 +82,11 @@ const AuthUserScreen = (props) => {
     setIsLoading(true);
     try {
       await dispatch(action);
+      props.navigation.navigate("shop");
     } catch (err) {
       setError(err.message);
+      setIsLoading(false);
     }
-    setIsLoading(false);
   };
 
   const inputChangeHandler = useCallback(
@@ -105,6 +106,7 @@ const AuthUserScreen = (props) => {
       return Alert.alert("Oops!!", error, [{ text: "OKAY!" }]);
     }
   }, [error]);
+  
   return (
     <KeyboardAvoidingView
       behavior="padding"

@@ -9,6 +9,7 @@ import ReduxThunk from "redux-thunk";
 import ProductReducer from "./store/reducers/Product";
 import CartReducer from "./store/reducers/Cart";
 import OrderReducer from "./store/reducers/Order";
+import AuthReducer from "./store/reducers/auth";
 import ShopNavigation from "./navigation/ShopNavigation";
 import { enableScreens } from "react-native-screens";
 //import { composeWithDevTools } from "redux-devtools-extension";
@@ -19,6 +20,7 @@ const rootReducer = combineReducers({
   products: ProductReducer,
   cart: CartReducer,
   orders: OrderReducer,
+  auth: AuthReducer,
 });
 
 const store = createStore(rootReducer, applyMiddleware(ReduxThunk)); // for production
