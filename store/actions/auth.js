@@ -1,3 +1,5 @@
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
 export const SIGNUP = "SIGNUP";
 export const LOGIN = "LOGIN";
 
@@ -33,6 +35,7 @@ export const login = (email, password) => {
     const resData = await response.json();
     // console.log(resData);
     dispatch({ type: LOGIN, token: resData.idToken, userId: resData.localId });
+    saveDataToStorage(resData.idToken, resData.localId);
   };
 };
 
@@ -69,4 +72,14 @@ export const signup = (email, password) => {
     console.log(resData);
     dispatch({ type: SIGNUP, token: resData.idToken, userId: resData.localId });
   };
+};
+
+const saveDataToStorage = (token, userId) => {
+  AsyncStorage.setItem(
+    "userData",
+    JSON.stringify({
+      token: token,
+      userId: userId,
+    })
+  );
 };

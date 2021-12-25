@@ -22,7 +22,7 @@ export const fetchProduct = () => {
         loadedProducts.push(
           new Product(
             key,
-            userId,
+            resProdData[key].ownerId,
             resProdData[key].title,
             resProdData[key].imageurl,
             resProdData[key].description,

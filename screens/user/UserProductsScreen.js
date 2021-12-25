@@ -1,5 +1,5 @@
 import React, { useState, useCallback } from "react";
-import { FlatList, Button, Alert } from "react-native";
+import { FlatList, Button, Alert, View, Text, StyleSheet } from "react-native";
 import ProductItem from "../../components/shop/ProductItem";
 import { useSelector, useDispatch } from "react-redux";
 import CartButton from "../../components/UI/CartButton";
@@ -26,6 +26,17 @@ const UserProductsScreen = (props) => {
       },
     ]);
   };
+
+  if (userProduct.length === 0) {
+    return (
+      <View style={styles.emptyscreen}>
+        <Text style={styles.emptyTitle}>Check your internet!</Text>
+        <Text style={styles.emptydes} numberOfLines={1}>
+          It's a good day to buy the items you might need later!
+        </Text>
+      </View>
+    );
+  }
 
   const renderUserProduct = (itemData) => {
     return (
@@ -98,5 +109,24 @@ UserProductsScreen.navigationOptions = (navData) => {
     ),
   };
 };
+
+const styles = StyleSheet.create({
+  emptyscreen: {
+    flex: 1,
+    backgroundColor: "white",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+
+  emptyTitle: {
+    fontFamily: "my-open-sans-bold",
+    fontSize: 20,
+  },
+  emptydes: {
+    fontFamily: "my-open-sans",
+    fontSize: 14,
+    color: "#888",
+  },
+});
 
 export default UserProductsScreen;
