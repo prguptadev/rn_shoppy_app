@@ -61,6 +61,7 @@ const Input = (props) => {
         {...props}
         style={styles.input}
         value={inputState.value}
+        placeholder={props.placeHolder}
         onChangeText={textChangeHandler}
         //returnKeyType="next"
         onBlur={lostFocusHandler}
