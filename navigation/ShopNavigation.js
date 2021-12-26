@@ -10,6 +10,7 @@ import CartScreen from "../screens/shop/CartScreen";
 import UserProductsScreen from "../screens/user/UserProductsScreen";
 import EditProductScreen from "../screens/user/EditProductScreen";
 import AuthUserScreen from "../screens/user/AuthUserScreen";
+import StartupScreen from "../screens/StartupScreen";
 import Colors from "../constants/Colors";
 import { Ionicons } from "@expo/vector-icons";
 
@@ -109,13 +110,16 @@ const AuthNavigator = createStackNavigator(
     Auth: AuthUserScreen,
   },
   {
-    defaultNavigationOptions: defaultNavigate,
+    defaultNavigationOptions: {
+      headerShown: false,
+    },
   }
 );
 
 const MainNavigator = createSwitchNavigator({
+  Startup: StartupScreen,
   Auth: AuthNavigator,
-  shop: ShopNavigator,
+  Shop: ShopNavigator,
 });
 
 export default createAppContainer(MainNavigator);

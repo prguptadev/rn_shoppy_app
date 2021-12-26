@@ -7,6 +7,7 @@ import {
   Button,
   Alert,
   ActivityIndicator,
+  Platform,
 } from "react-native";
 import { useDispatch } from "react-redux";
 import Input from "../../components/UI/Input";
@@ -14,6 +15,7 @@ import Card from "../../components/UI/Card";
 import Colors from "../../constants/Colors";
 import { LinearGradient } from "expo-linear-gradient";
 import * as AuthAction from "../../store/actions/auth";
+import { useHeaderHeight } from "@react-navigation/elements";
 
 const FORM_INPUT_UPDATE = "FORM_INPUT_UPDATE";
 
@@ -41,6 +43,8 @@ const authReducer = (state, action) => {
 };
 
 const AuthUserScreen = (props) => {
+  //const headerHeight = useHeaderHeight();
+
   const [error, setError] = useState();
   const [isLoading, setIsLoading] = useState(false);
   const [isSignup, setisSignup] = useState(false);
@@ -82,7 +86,7 @@ const AuthUserScreen = (props) => {
     setIsLoading(true);
     try {
       await dispatch(action);
-      props.navigation.navigate("shop");
+      props.navigation.navigate("Shop");
     } catch (err) {
       setError(err.message);
       setIsLoading(false);
@@ -106,15 +110,16 @@ const AuthUserScreen = (props) => {
       return Alert.alert("Oops!!", error, [{ text: "OKAY!" }]);
     }
   }, [error]);
-  
+
   return (
     <KeyboardAvoidingView
-      behavior="padding"
-      keyboardVerticalOffset={40}
+      // behavior="padding"
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      // keyboardVerticalOffset={80}
       style={styles.screen}
     >
       <LinearGradient
-        colors={["#ffedff", "#ffe3ff", "#ffe6ff", Colors.primary]}
+        colors={["#ffedff", "#ffe3ff", "#ffe6ff", Colors.accent]}
         style={styles.gradient}
       >
         <Card style={styles.authencontain}>
