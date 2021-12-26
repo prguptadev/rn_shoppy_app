@@ -36,6 +36,7 @@ export const addOrder = (cartItem, totalAmt) => {
   return async (dispatch, getState) => {
     const token = getState().auth.token;
     const userId = getState().auth.userId;
+    // console.log(userId);
     const response = await fetch(
       `https://rn-shoppy-app-default-rtdb.firebaseio.com/orders/${userId}.json?auth=${token}`,
       {
