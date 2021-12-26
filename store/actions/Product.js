@@ -6,7 +6,8 @@ export const UPDATE_PRODUCT = "UPDATE_PRODUCT";
 export const FETCHS_PRODUCT = "FETCH_PRODUCT";
 
 export const fetchProduct = () => {
-  return async (dispatch) => {
+  return async (dispatch, getState) => {
+    const userId = getState().auth.userId;
     try {
       const responseProduct = await fetch(
         "https://rn-shoppy-app-default-rtdb.firebaseio.com/products.json"
@@ -21,7 +22,7 @@ export const fetchProduct = () => {
         loadedProducts.push(
           new Product(
             key,
-            "u1",
+            resProdData[key].ownerId,
             resProdData[key].title,
             resProdData[key].imageurl,
             resProdData[key].description,
@@ -34,6 +35,9 @@ export const fetchProduct = () => {
       dispatch({
         type: FETCHS_PRODUCT,
         products: loadedProducts,
+        userProducts: loadedProducts.filter(
+          (prodId) => prodId.ownerId === userId
+        ),
       });
     } catch (err) {
       //send eror to log
@@ -43,9 +47,10 @@ export const fetchProduct = () => {
 };
 
 export const deleteProduct = (productId) => {
-  return async (dispatch) => {
+  return async (dispatch, getState) => {
+    const token = getState().auth.token;
     const response = await fetch(
-      `https://rn-shoppy-app-default-rtdb.firebaseio.com/products/${productId}.json`,
+      `https://rn-shoppy-app-default-rtdb.firebaseio.com/products/${productId}.json?auth=${token}`,
       {
         method: "DELETE",
         headers: { "Content-Type": "application/json" },
@@ -60,13 +65,21 @@ export const deleteProduct = (productId) => {
 };
 
 export const createProduct = (title, description, imageurl, price) => {
-  return async (dispatch) => {
+  return async (dispatch, getState) => {
+    const token = getState().auth.token;
+    const userId = getState().auth.userId;
     const response = await fetch(
-      "https://rn-shoppy-app-default-rtdb.firebaseio.com/products.json",
+      `https://rn-shoppy-app-default-rtdb.firebaseio.com/products.json?auth=${token}`,
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ title, description, imageurl, price }),
+        body: JSON.stringify({
+          title: title,
+          description: description,
+          imageurl: imageurl,
+          price: price,
+          ownerId: userId,
+        }),
       }
     );
     if (!response.ok) {
@@ -81,6 +94,7 @@ export const createProduct = (title, description, imageurl, price) => {
       type: CREATE_PRODUCT,
       newProduct: {
         id: resData.name,
+        ownerId: userId,
         title: title,
         description: description,
         imageurl: imageurl,
@@ -91,9 +105,11 @@ export const createProduct = (title, description, imageurl, price) => {
 };
 
 export const updateProduct = (id, title, description, imageurl, price) => {
-  return async (dispatch) => {
+  return async (dispatch, getState) => {
+    const token = getState().auth.token;
+    // console.log(getState());
     const response = await fetch(
-      `https://rn-shoppy-app-default-rtdb.firebaseio.com/products/${id}.json`,
+      `https://rn-shoppy-app-default-rtdb.firebaseio.com/products/${id}.json?auth=${token}`,
       {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },

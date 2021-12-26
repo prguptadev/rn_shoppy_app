@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   StyleSheet,
   FlatList,
@@ -7,6 +7,7 @@ import {
   Button,
   Image,
   Platform,
+  Alert,
   ActivityIndicator,
 } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
@@ -19,6 +20,7 @@ import Card from "../../components/UI/Card";
 
 const CartScreen = (props) => {
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState();
 
   let totalQuantity = 0;
   // const cartItems = useSelector((state) => state.cart.items); // gives object convert to array
@@ -47,11 +49,23 @@ const CartScreen = (props) => {
   const dispatch = useDispatch();
 
   const sendOrderHandler = async () => {
+    setError(null);
     setIsLoading(true);
-    await dispatch(OrderAction.addOrder(cartItems, Cart_total_amt));
-    props.navigation.navigate("orders");
+    try {
+      await dispatch(OrderAction.addOrder(cartItems, Cart_total_amt));
+      props.navigation.navigate("orders");
+    } catch (err) {
+      setError(err.message);
+    }
+
     setIsLoading(false);
   };
+
+  useEffect(() => {
+    if (error) {
+      return Alert.alert("Oops!!", error, [{ text: "OKAY!" }]);
+    }
+  }, [error]);
 
   if (cartItems.length === 0 || !cartItems) {
     return (

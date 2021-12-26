@@ -4,9 +4,10 @@ export const ADD_ORDER = "ADD_ORDER";
 export const FETCH_ORDER = "FETCH_ORDER";
 
 export const fetchOrder = () => {
-  return async (dispatch) => {
+  return async (dispatch, getState) => {
+    const userId = getState().auth.userId;
     const response = await fetch(
-      "https://rn-shoppy-app-default-rtdb.firebaseio.com/orders/u1.json"
+      `https://rn-shoppy-app-default-rtdb.firebaseio.com/orders/${userId}.json`
     );
     if (!response.ok) {
       throw new Error("Something went wrong-ORDER");
@@ -24,7 +25,7 @@ export const fetchOrder = () => {
         )
       );
     }
-    console.log(loadedOrders);
+    //  console.log(loadedOrders);
 
     dispatch({ type: FETCH_ORDER, orders: loadedOrders });
   };
@@ -32,9 +33,12 @@ export const fetchOrder = () => {
 
 export const addOrder = (cartItem, totalAmt) => {
   const date = new Date();
-  return async (dispatch) => {
+  return async (dispatch, getState) => {
+    const token = getState().auth.token;
+    const userId = getState().auth.userId;
+    // console.log(userId);
     const response = await fetch(
-      "https://rn-shoppy-app-default-rtdb.firebaseio.com/orders/u1.json",
+      `https://rn-shoppy-app-default-rtdb.firebaseio.com/orders/${userId}.json?auth=${token}`,
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -46,7 +50,7 @@ export const addOrder = (cartItem, totalAmt) => {
       }
     );
     if (!response.ok) {
-      throw new Error("Something went wrong -ORDERS");
+      throw new Error("Something went wrong -ADD ORDERS");
     }
     const resData = await response.json();
     dispatch({
