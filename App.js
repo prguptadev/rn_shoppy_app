@@ -11,7 +11,7 @@ import CartReducer from "./store/reducers/Cart";
 import OrderReducer from "./store/reducers/Order";
 import AuthReducer from "./store/reducers/auth";
 //import ShopNavigation from "./navigation/ShopNavigation";
-import NavigationContainer from "./navigation/NavigationContainer";
+import NavigationContainer from "./navigation_v3_v4/NavigationContainer";
 import { enableScreens } from "react-native-screens";
 //import { composeWithDevTools } from "redux-devtools-extension";
 
