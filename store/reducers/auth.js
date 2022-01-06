@@ -9,7 +9,11 @@ const initialState = {
 export default (state = initialState, action) => {
   switch (action.type) {
     case LOGOUT: {
-      return initialState;
+      // return initialState;
+      return {
+        ...initialState,
+        didyoutryLogin: true,
+      };
     }
     case DID_YOU_TRY_AGAIN: {
       return {

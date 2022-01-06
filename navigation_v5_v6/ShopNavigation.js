@@ -66,6 +66,11 @@ export const ProductsNavigator = () => {
         component={ProductDetailScreen}
         options={cartScreenOptions}
       />
+      <ProductStackNavigator.Screen
+        name="orders"
+        component={OrderScreen}
+        options={OrderscreenOptions}
+      />
     </ProductStackNavigator.Navigator>
   );
 };

@@ -82,7 +82,7 @@ const UserProductsScreen = (props) => {
   );
 };
 
-//need to revamp to navigation 5 or 6 
+//need to revamp to navigation 5 or 6
 //UserProductsScreen.navigationOptions = (navData) => {
 export const screenOptions = (navData) => {
   return {

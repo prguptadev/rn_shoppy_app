@@ -15,7 +15,10 @@ import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import * as OrderAction from "../../store/actions/Order";
 
 const ProductDetailScreen = (props) => {
-  const productId = props.navigation.getParam("productId");
+  // const productId = props.navigation.getParam("productId");
+
+  const productId = props.route.params ? props.route.params.productId : null;
+
   const selectedProduct = useSelector((state) =>
     state.products.avaiableProducts.find((prod) => prod.id === productId)
   );
@@ -72,8 +75,9 @@ const ProductDetailScreen = (props) => {
 
 //ProductDetailScreen.navigationOptions = (navData) => {
 export const screenOptions = (navData) => {
+  const routeParm = navData.route.params ? navData.route.params : {};
   return {
-    headerTitle: navData.navigation.getParam("productTitle"),
+    headerTitle: routeParm.productTitle,
     headerRight: () => (
       <HeaderButtons HeaderButtonComponent={CartButton}>
         <Item
