@@ -61,7 +61,8 @@ const ProductDetailScreen = (props) => {
               dispatch(
                 OrderAction.addOrder(transformedbuyItem, selectedProduct.price)
               );
-              props.navigation.navigate("orders");
+              // props.navigation.jumpTo("orders");
+              props.navigation.navigate("orders", { screen: "Orders" });
             }}
           />
         </View>

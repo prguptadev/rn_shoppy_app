@@ -66,11 +66,6 @@ export const ProductsNavigator = () => {
         component={ProductDetailScreen}
         options={cartScreenOptions}
       />
-      <ProductStackNavigator.Screen
-        name="orders"
-        component={OrderScreen}
-        options={OrderscreenOptions}
-      />
     </ProductStackNavigator.Navigator>
   );
 };
@@ -190,6 +185,8 @@ export const ShopNavigator = () => {
         drawerStyle: {
           backgroundColor: "#ffff",
           width: 240,
+          paddingTop: 50,
+          padding: 6,
         },
         // overlayColor: "green",
       }}

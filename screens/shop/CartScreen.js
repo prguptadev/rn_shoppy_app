@@ -53,7 +53,8 @@ const CartScreen = (props) => {
     setIsLoading(true);
     try {
       await dispatch(OrderAction.addOrder(cartItems, Cart_total_amt));
-      props.navigation.navigate("orders");
+      props.navigation.navigate("orders", { screen: "Orders" });
+      //  NavigationActions.navigate({ routeName: "orders" });
     } catch (err) {
       setError(err.message);
     }
