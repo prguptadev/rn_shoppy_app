@@ -4,8 +4,13 @@ export const SIGNUP = "SIGNUP";
 export const LOGIN = "LOGIN";
 export const AUTHENTICATE = "AUTHENTICATE";
 export const LOGOUT = "LOGOUT";
+export const DID_YOU_TRY_AGAIN = "DID_YOU_TRY_AGAIN";
 
 let timer;
+
+export const didyoutryLogin = () => {
+  return { type: DID_YOU_TRY_AGAIN };
+};
 
 export const authenticate = (token, userId, expiryTime) => {
   //return { type: AUTHENTICATE, token: token, userId: userId };

@@ -165,7 +165,10 @@ const CartScreen = (props) => {
   );
 };
 
-CartScreen.navigationOptions = {
+//// now need to change for navigation 5 and 6
+
+//CartScreen.navigationOptions = {
+export const screenOptions = {
   headerTitle: "Cart",
 };
 

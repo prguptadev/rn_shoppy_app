@@ -38,13 +38,20 @@ const ProductsOverviewScreen = (props) => {
     setisRefreashing(false);
   }, [dispatch, setError, setisRefreashing]);
 
+  // useEffect(() => {
+  //   const willFocusSub = props.navigation.addListener(
+  //     "willFocus",
+  //     loadProducts
+  //   );
+  //   return () => {
+  //     willFocusSub.remove();
+  //   };
+  // }, [loadProducts]);
+
   useEffect(() => {
-    const willFocusSub = props.navigation.addListener(
-      "willFocus",
-      loadProducts
-    );
+    const unsubscribe = props.navigation.addListener("focus", loadProducts);
     return () => {
-      willFocusSub.remove();
+      unsubscribe();
     };
   }, [loadProducts]);
 
@@ -140,7 +147,37 @@ const ProductsOverviewScreen = (props) => {
   );
 };
 
-ProductsOverviewScreen.navigationOptions = (navData) => {
+// now need to change for navigation 5 and 6
+
+// ProductsOverviewScreen.navigationOptions = (navData) => {
+//   return {
+//     headerTitle: "All Products",
+//     headerRight: () => (
+//       <HeaderButtons HeaderButtonComponent={CartButton}>
+//         <Item
+//           title="Cart"
+//           iconName="ios-cart"
+//           onPress={() => {
+//             navData.navigation.navigate("CartScreens");
+//           }}
+//         />
+//       </HeaderButtons>
+//     ),
+//     headerLeft: () => (
+//       <HeaderButtons HeaderButtonComponent={CartButton}>
+//         <Item
+//           title="Menu"
+//           iconName="ios-menu"
+//           onPress={() => {
+//             navData.navigation.toggleDrawer();
+//           }}
+//         />
+//       </HeaderButtons>
+//     ),
+//   };
+// };
+
+export const screenOptions = (navData) => {
   return {
     headerTitle: "All Products",
     headerRight: () => (
