@@ -271,7 +271,10 @@ const EditProductScreen = (props) => {
   );
 };
 
-EditProductScreen.navigationOptions = (navData) => {
+//need to revamp to navigation 5 or 6
+//EditProductScreen.navigationOptions = (navData) => {
+
+export const screenOptions = (navData) => {
   const submitFn = navData.navigation.getParam("submit");
   return {
     headerTitle: navData.navigation.getParam("productId")

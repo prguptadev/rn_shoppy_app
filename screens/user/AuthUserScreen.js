@@ -86,7 +86,7 @@ const AuthUserScreen = (props) => {
     setIsLoading(true);
     try {
       await dispatch(action);
-      props.navigation.navigate("Shop");
+      // props.navigation.navigate("Shop");
     } catch (err) {
       setError(err.message);
       setIsLoading(false);
@@ -176,7 +176,10 @@ const AuthUserScreen = (props) => {
   );
 };
 
-AuthUserScreen.navigationOptions = {
+//need to revamp to navigation 5 or 6
+//AuthUserScreen.navigationOptions = {
+
+export const screenOptions = {
   headerTitle: "Authenication",
 };
 

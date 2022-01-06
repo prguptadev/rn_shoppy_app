@@ -68,8 +68,10 @@ const ProductDetailScreen = (props) => {
     </ScrollView>
   );
 };
+//// now need to change for navigation 5 and 6
 
-ProductDetailScreen.navigationOptions = (navData) => {
+//ProductDetailScreen.navigationOptions = (navData) => {
+export const screenOptions = (navData) => {
   return {
     headerTitle: navData.navigation.getParam("productTitle"),
     headerRight: () => (
