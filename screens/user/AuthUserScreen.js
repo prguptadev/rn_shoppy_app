@@ -86,7 +86,7 @@ const AuthUserScreen = (props) => {
     setIsLoading(true);
     try {
       await dispatch(action);
-      props.navigation.navigate("Shop");
+      // props.navigation.navigate("Shop");
     } catch (err) {
       setError(err.message);
       setIsLoading(false);
@@ -119,7 +119,18 @@ const AuthUserScreen = (props) => {
       style={styles.screen}
     >
       <LinearGradient
-        colors={["#ffedff", "#ffe3ff", "#ffe6ff", Colors.accent]}
+        colors={[
+          "transparent",
+          "#ffe6ff",
+          "red",
+          Colors.accent,
+          "green",
+          "blue",
+          "pink",
+          "transparent",
+        ]}
+        start={{ x: 0.1, y: 0.1 }}
+        end={{ x: 1.5, y: 0.5 }}
         style={styles.gradient}
       >
         <Card style={styles.authencontain}>
@@ -176,7 +187,10 @@ const AuthUserScreen = (props) => {
   );
 };
 
-AuthUserScreen.navigationOptions = {
+//need to revamp to navigation 5 or 6
+//AuthUserScreen.navigationOptions = {
+
+export const screenOptions = {
   headerTitle: "Authenication",
 };
 

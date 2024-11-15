@@ -82,7 +82,9 @@ const UserProductsScreen = (props) => {
   );
 };
 
-UserProductsScreen.navigationOptions = (navData) => {
+//need to revamp to navigation 5 or 6
+//UserProductsScreen.navigationOptions = (navData) => {
+export const screenOptions = (navData) => {
   return {
     headerTitle: "Admin",
     headerLeft: () => (

@@ -53,7 +53,8 @@ const CartScreen = (props) => {
     setIsLoading(true);
     try {
       await dispatch(OrderAction.addOrder(cartItems, Cart_total_amt));
-      props.navigation.navigate("orders");
+      props.navigation.navigate("orders", { screen: "Orders" });
+      //  NavigationActions.navigate({ routeName: "orders" });
     } catch (err) {
       setError(err.message);
     }
@@ -165,7 +166,10 @@ const CartScreen = (props) => {
   );
 };
 
-CartScreen.navigationOptions = {
+//// now need to change for navigation 5 and 6
+
+//CartScreen.navigationOptions = {
+export const screenOptions = {
   headerTitle: "Cart",
 };
 

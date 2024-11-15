@@ -124,7 +124,10 @@ const OrderScreen = (props) => {
   );
 };
 
-OrderScreen.navigationOptions = (navData) => {
+//need to revamp with navigation 5 and 6
+//OrderScreen.navigationOptions = (navData) => {
+
+export const screenOptions = (navData) => {
   return {
     headerTitle: "Orders",
     headerRight: () => (

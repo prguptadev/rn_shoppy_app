@@ -41,7 +41,9 @@ const formReducer = (state, action) => {
 const EditProductScreen = (props) => {
   const [error, setError] = useState();
   const [isLoading, setIsLoading] = useState(false);
-  const productId = props.navigation.getParam("productId");
+  // const productId = props.navigation.getParam("productId");
+  const productId = props.route.params ? props.route.params.productId : null;
+
   const editedProduct = useSelector((state) =>
     state.products.userProducts.find((prod) => prod.id === productId)
   );
@@ -123,7 +125,14 @@ const EditProductScreen = (props) => {
   }, [dispatch, productId, formState]);
 
   useEffect(() => {
-    props.navigation.setParams({ submit: submitHandler });
+    // props.navigation.setParams({ submit: submitHandler });
+    props.navigation.setOptions({
+      headerRight: () => (
+        <HeaderButtons HeaderButtonComponent={CartButton}>
+          <Item title="save" iconName="ios-checkmark" onPress={submitHandler} />
+        </HeaderButtons>
+      ),
+    });
   }, [submitHandler]);
 
   const inputChangeHandler = useCallback(
@@ -271,17 +280,21 @@ const EditProductScreen = (props) => {
   );
 };
 
-EditProductScreen.navigationOptions = (navData) => {
-  const submitFn = navData.navigation.getParam("submit");
+//need to revamp to navigation 5 or 6
+//EditProductScreen.navigationOptions = (navData) => {
+
+export const screenOptions = (navData) => {
+  //  const submitFn = navData.navigation.getParam("submit");
+  //const submitFn = navData.route.params ? navData.route.params.submit : null;
+  //  navigation 6 has setOPtion to use from component to navigation
+  const routeParam = navData.route.params ? navData.route.params : {};
   return {
-    headerTitle: navData.navigation.getParam("productId")
-      ? "Edit Product"
-      : "Add Product",
-    headerRight: () => (
-      <HeaderButtons HeaderButtonComponent={CartButton}>
-        <Item title="save" iconName="ios-checkmark" onPress={submitFn} />
-      </HeaderButtons>
-    ),
+    headerTitle: routeParam.productId ? "Edit Product" : "Add Product",
+    // headerRight: () => (
+    //   <HeaderButtons HeaderButtonComponent={CartButton}>
+    //     <Item title="save" iconName="ios-checkmark" onPress={submitFn} />
+    //   </HeaderButtons>
+    // ),
   };
 };
 

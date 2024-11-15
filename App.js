@@ -11,8 +11,9 @@ import CartReducer from "./store/reducers/Cart";
 import OrderReducer from "./store/reducers/Order";
 import AuthReducer from "./store/reducers/auth";
 //import ShopNavigation from "./navigation/ShopNavigation";
-import NavigationContainer from "./navigation/NavigationContainer";
+import NavigationContainer from "./navigation_v3_v4/NavigationContainer";
 import { enableScreens } from "react-native-screens";
+import AppNavigationContainer from "./navigation_v5_v6/AppNavigationContainer";
 //import { composeWithDevTools } from "redux-devtools-extension";
 
 enableScreens();
@@ -54,7 +55,8 @@ export default function App() {
     <Provider store={store}>
       <StatusBar style="auto" />
       {/* <ShopNavigation /> */}
-      <NavigationContainer />
+      {/* <NavigationContainer />  OLD NAVIGATION V3 V4*/}
+      <AppNavigationContainer />
     </Provider>
   );
 }
